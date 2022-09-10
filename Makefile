@@ -16,7 +16,7 @@ RM = rm -f
 NAME = minishell
 
 INCLUDE = -I./include
-SRCS_DIR = ./srcs
+SRCS_DIR = ./srcs 
 SRCS_FILES = main.c
 SRCS = $(addprefix $(addsuffix /, $(SRCS_DIR)), $(SRCS_FILES))
 OBJS = $(SRCS:.c=.o)
@@ -41,3 +41,4 @@ norm :
 	norminette $(SRCS)
 
 .PHONY: all re clean fclean
+Hello wordl
