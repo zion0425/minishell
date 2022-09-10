@@ -6,7 +6,7 @@
 #    By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/10 14:08:26 by yjoo              #+#    #+#              #
-#    Updated: 2022/09/10 17:02:41 by yjoo             ###   ########.fr        #
+#    Updated: 2022/09/10 18:12:40 by yjoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,5 +41,3 @@ norm :
 	norminette $(SRCS)
 
 .PHONY: all re clean fclean
-나는 행복합니다
-	Hello World
