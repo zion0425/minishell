@@ -41,4 +41,3 @@ norm :
 	norminette $(SRCS)
 
 .PHONY: all re clean fclean
-Hello wordl
