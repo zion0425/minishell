@@ -69,16 +69,17 @@ endif
 all: $(NAME)
 
 $(NAME) : $(OBJ)
-		$(LIB) $@ $?
+		@$(LIB) $@ $?
+		@echo "\033[32m"libft_complete"\033[0m"
 
 %.o : %.c
-		$(CC) $(CFLAGS) -c $?
+		@$(CC) $(CFLAGS) -c $?
 
 clean:
-		rm -f $(OBJS) $(OBJS_BONUS)
+		@rm -f $(OBJS) $(OBJS_BONUS)
 
 fclean: clean
-		rm -f $(NAME)
+		@rm -f $(NAME)
 
 re: fclean all
 

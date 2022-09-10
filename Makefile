@@ -6,7 +6,7 @@
 #    By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/10 14:08:26 by yjoo              #+#    #+#              #
-#    Updated: 2022/09/10 18:12:40 by yjoo             ###   ########.fr        #
+#    Updated: 2022/09/10 18:23:53 by yjoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,17 +25,18 @@ all : $(NAME)
 
 $(NAME) : $(OBJS)
 		@make -C ./libft/
-		$(CC) $(INCLUDE) $^ ./libft/libft.a -lreadline -o $@
+		@$(CC) $(INCLUDE) $^ ./libft/libft.a -lreadline -o $@
+		@echo "\033[32m"minishell_complete"\033[0m"
 
 re : fclean all
 
 clean :
-		make -C ./libft/ clean
-		$(RM) $(OBJS)
+		@make -C ./libft/ clean
+		@$(RM) $(OBJS)
 
 fclean : clean
-		make -C ./libft/ fclean
-		$(RM) $(NAME)
+		@make -C ./libft/ fclean
+		@$(RM) $(NAME)
 
 norm : 
 	norminette $(SRCS)
