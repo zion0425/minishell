@@ -4,5 +4,6 @@
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/stat.h>
 
 #endif
