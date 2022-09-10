@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 14:15:39 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/10 15:07:27 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/10 18:46:24 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,18 @@ int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	//(void)envp;
+	(void)envp;
 
-	//char *str;
+	char *str;
 	while (1)
 	{
-		/*str = readline("minishell $> ");
-			signal 
+		str = readline("minishell$> ");
 		if (str)
 			ft_putstr_fd(ft_strjoin(str, "\n"), 1);
 		else
 			break ;
 		add_history(str);
-		free(str);*/
-		while (*envp)
-		{
-			ft_putstr_fd(*envp++, 1);
-			ft_putstr_fd("\n", 1);
-		}
-		if (!(*envp))
-			break ;
+		free(str);
 	}
 	return (0);
 }
