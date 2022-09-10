@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/10 14:08:26 by yjoo              #+#    #+#              #
-#    Updated: 2022/09/10 18:29:28 by yjoo             ###   ########.fr        #
+#    Updated: 2022/09/10 18:59:47 by siokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ NAME = minishell
 
 INCLUDE = -I./include
 SRCS_DIR = ./srcs 
-SRCS_FILES = main.c
+SRCS_FILES = main.c execve.c
 SRCS = $(addprefix $(addsuffix /, $(SRCS_DIR)), $(SRCS_FILES))
 OBJS = $(SRCS:.c=.o)
 

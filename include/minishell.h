@@ -5,5 +5,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/stat.h>
+# include <stdio.h>
+
+void	ft_execve(char **envp, char *cmd);
 
 #endif
