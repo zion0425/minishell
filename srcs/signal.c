@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/10 14:15:39 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/11 20:30:22 by yjoo             ###   ########.fr       */
+/*   Created: 2022/09/11 16:37:19 by yjoo              #+#    #+#             */
+/*   Updated: 2022/09/11 20:37:17 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	signal_handler(int signo)
 {
-	(void)argc;
-	(void)argv;
-	(void)envp;
+	pid_t	pid;
 
-	char *str;
-
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
-	str = NULL;
-	while (1)
+	pid = waitpid(-1, NULL, WNOHANG);
+	if (signo == SIGINT)
 	{
-		str = readline("minishell$> ");
-		if (str == NULL)
-		{	
-			ft_putstr_fd("\x1b[1A\033[12Cexit\n", 1);
-			exit(EXIT_SUCCESS);
+		if (pid == -1)
+		{
+			ft_putendl_fd("", 1);
+			rl_replace_line("", 0);
+			rl_on_new_line();
+			rl_redisplay();
 		}
-		add_history(str);
-		free(str);
 	}
-	return (0);
+	if (signo == SIGQUIT)
+	{
+		if (pid == -1)
+		{
+			rl_on_new_line();
+			rl_redisplay();
+		}
+	}
 }
