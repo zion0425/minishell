@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:14:23 by siokim            #+#    #+#             */
-/*   Updated: 2022/09/10 19:15:08 by siokim           ###   ########.fr       */
+/*   Updated: 2022/09/11 14:03:36 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ void	ft_execve(char **envp, char *cmd)
 	char	*path;
 	char	**cmds;
 
-	path = getpath(envp, cmd);
 	cmds = ft_split(cmd, ' ');
+	path = getpath(envp, cmds[0]);
 	execve(path, cmds, envp);
 	write(2, cmd, ft_strlen(cmd));
-	write(2, ": command not found s\n", 20);
+	write(2, ": command not found\n", 20);
 	exit(127);
 }
