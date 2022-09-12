@@ -6,7 +6,7 @@
 #    By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/10 14:08:26 by yjoo              #+#    #+#              #
-#    Updated: 2022/09/11 20:37:49 by yjoo             ###   ########.fr        #
+#    Updated: 2022/09/12 19:36:54 by yjoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ fclean : clean
 		@$(RM) $(NAME)
 
 norm : 
-	norminette $(SRCS)
+	@norminette $(SRCS)
+	@norminette ./include
 
 .PHONY: all re clean fclean

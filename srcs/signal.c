@@ -6,33 +6,26 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 16:37:19 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/11 20:37:17 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/12 19:01:30 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	signal_handler(int signo)
+static void	signal_handler(int signo)
 {
-	pid_t	pid;
-
-	pid = waitpid(-1, NULL, WNOHANG);
 	if (signo == SIGINT)
 	{
-		if (pid == -1)
-		{
-			ft_putendl_fd("", 1);
-			rl_replace_line("", 0);
-			rl_on_new_line();
-			rl_redisplay();
-		}
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
-	if (signo == SIGQUIT)
-	{
-		if (pid == -1)
-		{
-			rl_on_new_line();
-			rl_redisplay();
-		}
-	}
+}
+
+void	signal_setting(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, signal_handler);
 }
