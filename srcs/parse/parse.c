@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 13:41:15 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/15 20:48:05 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/16 19:59:37 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,35 +47,53 @@ int	get_token_type(char *line, int idx)
 	return (WORD);
 }
 
-char	*quote_token_handle(t_token	*new_token, char *line, int *idx)
+char	*quote_token_handle(char *line, int *idx)
 {
+	int		quote_cnt;
+	int		start;
 	char	quote_type;
+	char	*ret;
 
 	quote_type = line[*idx];
-	while (line[*idx] && line[*idx] != quote_type)
+	start = (*idx) + 1;
+	quote_cnt = -2;
+	while (line[*idx])
 	{
-		new_token->token = ft_strjoin("",line[*idx]);
-		*idx++;
+		if (line[*idx] == quote_type)
+			quote_cnt++;
+		if (quote_cnt == 0)
+			break ;
+		(*idx)++;
 	}
-	if (line[*idx] == '\0')
-		return (NULL);
+	if (quote_cnt == 0)
+	{
+		ret = ft_substr(line, start, *idx - start);
+		return (ret);
+	}
+	return (NULL);
 }
 
-t_token	*new_token(char *line, int *idx)
+char	*word_token_handle(char *line, int *idx)
 {
-	t_token	*new_token;
+	int		start;
+	char	*ret;
+	
+	start = *idx;
+	while (line[*idx] && line[*idx] != ' ')
+	{
+		
+	}
+}
 
-	new_token = (t_token *)ft_calloc(sizeof(t_token), 1);
-	if (!new_token)
-		return (NULL);
-	new_token->type = get_token_type(line, *idx);
+void	input_token(t_token *new_token, char *line, int *idx)
+{
 	if (new_token->type == HEREDOC || new_token->type == APPEND)
 	{
 		if (new_token->type == HEREDOC)
 			new_token->token = ft_strdup("<<");
-		if (new_token->type == APPEND)
+		else if (new_token->type == APPEND)
 			new_token->token = ft_strdup(">>");
-		*idx++;
+		(*idx)++;
 	}
 	else if (new_token->type == REDIRIN)
 		new_token->token = ft_strdup("<");
@@ -87,9 +105,27 @@ t_token	*new_token(char *line, int *idx)
 		new_token->token = ft_strdup("|");
 	else if (new_token->type == DOLLAR)
 		new_token->token = ft_strdup("$");
-	else if (new_token->token == QUOTE || new_token->token == DQUOTE)
-		new_token->token = quote_token_handle(new_token, line, idx);
-	return (new_token);
+	else if (new_token->type == QUOTE || new_token->type == DQUOTE)
+		new_token->token = quote_token_handle(line, idx);
+	else if (new_token->type == WORD)
+		new_token->token = word_token_handle(line, idx);
+}
+
+int	*new_token(char *line, int *idx)
+{
+	t_token	*new_token;
+
+	new_token = (t_token *)ft_calloc(sizeof(t_token), 1);
+	if (!new_token)
+		return (0);
+	new_token->type = get_token_type(line, *idx);
+	input_token(new_token, line, (int *)idx++);
+	if (!new_token->token)
+	{
+		free(new_token);
+		return (0);
+	}
+	return (1);
 }
 
 int	create_token_list(char *line, t_token **token_head)
