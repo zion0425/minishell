@@ -142,7 +142,7 @@ int	new_token(t_token **head_token, char *line, int *idx)
 	if (!new_token)
 		return (0);
 	new_token->type = get_token_type(line, *idx);
-	input_token(new_token, line, (int *)idx++);
+	input_token(new_token, line, idx);
 	if (!new_token->token)
 	{
 		free(new_token);
