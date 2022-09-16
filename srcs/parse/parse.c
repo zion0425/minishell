@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 13:41:15 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/16 19:59:37 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/16 21:07:03 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,16 @@ char	*word_token_handle(char *line, int *idx)
 {
 	int		start;
 	char	*ret;
-	
+
 	start = *idx;
-	while (line[*idx] && line[*idx] != ' ')
-	{
-		
-	}
+	(void)ret;
+	while (line[*idx] && !(line[*idx] == ' ' || \
+		(line[*idx] >= 9 && line[*idx] <= 13)))
+		(*idx)++;
+	ret = ft_substr(line, start, *idx - start);
+	if (!ret)
+		return (NULL);
+	return (ret);
 }
 
 void	input_token(t_token *new_token, char *line, int *idx)
@@ -111,7 +115,26 @@ void	input_token(t_token *new_token, char *line, int *idx)
 		new_token->token = word_token_handle(line, idx);
 }
 
-int	*new_token(char *line, int *idx)
+int	add_token_list(t_token **head_token, t_token **new_token)
+{
+	t_token	*cur_token;
+
+	if (*new_token == NULL)
+		return (0);
+	if (*head_token == NULL)
+		*head_token = *new_token;
+	else
+	{
+		cur_token = *head_token;
+		while (cur_token->next != NULL)
+			cur_token = cur_token->next;
+		cur_token->next = *new_token;
+		(*new_token)->prev = cur_token;
+	}
+	return (1);
+}
+
+int	new_token(t_token **head_token, char *line, int *idx)
 {
 	t_token	*new_token;
 
@@ -125,15 +148,14 @@ int	*new_token(char *line, int *idx)
 		free(new_token);
 		return (0);
 	}
-	return (1);
+	return (add_token_list(head_token, &new_token));
 }
 
-int	create_token_list(char *line, t_token **token_head)
+int	create_token_list(char *line, t_token **head_token)
 {
 	int	idx;
 
 	idx = 0;
-	(void)token_head;
 	while (line[idx])
 	{
 		while (line[idx] && (line[idx] == ' ' || \
@@ -141,8 +163,9 @@ int	create_token_list(char *line, t_token **token_head)
 			idx++;
 		if (!line[idx])
 			return (0);
-		if (!new_token(line, &idx))
+		if (!new_token(head_token, line, &idx))
 			return (0);
+		idx++;
 	}
 	return (1);
 }
@@ -150,7 +173,7 @@ int	create_token_list(char *line, t_token **token_head)
 int	parse(void)
 {
 	char	*line;
-	t_token	*token_head;
+	t_token	*head_token;
 
 	prompt(&line);
 	if (is_empty(line))
@@ -158,7 +181,7 @@ int	parse(void)
 		free(line);
 		return (0);
 	}
-	if (!create_token_list(line, &token_head))
+	if (!create_token_list(line, &head_token))
 		return (0);
 	add_history(line);
 	free(line);
