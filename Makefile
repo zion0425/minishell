@@ -6,7 +6,7 @@
 #    By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/10 14:08:26 by yjoo              #+#    #+#              #
-#    Updated: 2022/09/16 18:44:03 by yjoo             ###   ########.fr        #
+#    Updated: 2022/09/17 12:43:07 by yjoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,14 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 RM = rm -f
 NAME = minishell
+FSANI = -g3 -fsanitize=address
 
 INCLUDE = -I./include
 RLINC = -lreadline -L${HOME}/.brew/opt/readline/lib
 SRCS_DIR = ./srcs
 SRCS_FILES = main.c signal.c
 PARSE_DIR = ./srcs/parse
-PARSE_FILES = parse.c parse_utils.c	
+PARSE_FILES = parse.c parse_utils.c	token.c
 SRCS = $(addprefix $(addsuffix /, $(SRCS_DIR)), $(SRCS_FILES))\
 		$(addprefix $(addsuffix /, $(PARSE_DIR)), $(PARSE_FILES))
 OBJS = $(SRCS:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/15 17:35:18 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/17 13:28:30 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ struct s_cmd
 {
 	int		type;
 	char	*cmd;
-	t_cmd	*prev;
-	t_cmd	*next;
+	t_cmd	*left;
+	t_cmd	*right;
 };
 
 struct s_cmd_list
@@ -59,7 +59,12 @@ struct s_cmd_list
 
 int		parse(void);
 int		is_empty(char *line);
+int		get_token_type(char *line, int idx);
+int		new_token(t_token **head_token, char *line, int *idx);
+void	free_token_list(t_token *head_token);
 
 void	signal_setting(void);
+
+void	show_token_list(t_token *head_token);//삭제예정
 
 #endif
