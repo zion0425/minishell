@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/17 13:28:30 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/17 14:14:16 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+# include <sys/stat.h>
 
 # define WORD		0
 # define REDIRIN	1
@@ -34,7 +35,9 @@ typedef struct s_token		t_token;
 typedef struct s_cmd		t_cmd;
 typedef struct s_cmd_list	t_cmd_list;
 
-struct s_token
+void	ft_cmd(char **envp, char *cmd);
+
+typedef struct s_token
 {
 	int		type;
 	char	*token;
@@ -66,5 +69,12 @@ void	free_token_list(t_token *head_token);
 void	signal_setting(void);
 
 void	show_token_list(t_token *head_token);//삭제예정
+
+typedef struct s_cmd_list
+{
+	t_cmd	*head;
+	t_cmd	*tail;
+	int		size;
+}	t_cmd_list;
 
 #endif

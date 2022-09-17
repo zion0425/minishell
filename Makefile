@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/10 14:08:26 by yjoo              #+#    #+#              #
-#    Updated: 2022/09/17 12:43:07 by yjoo             ###   ########.fr        #
+#    Updated: 2022/09/17 14:14:51 by siokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ FSANI = -g3 -fsanitize=address
 INCLUDE = -I./include
 RLINC = -lreadline -L${HOME}/.brew/opt/readline/lib
 SRCS_DIR = ./srcs
-SRCS_FILES = main.c signal.c
+SRCS_FILES = main.c signal.c execve.c
 PARSE_DIR = ./srcs/parse
 PARSE_FILES = parse.c parse_utils.c	token.c
 SRCS = $(addprefix $(addsuffix /, $(SRCS_DIR)), $(SRCS_FILES))\
