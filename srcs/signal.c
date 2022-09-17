@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/10 14:15:39 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/12 19:10:16 by yjoo             ###   ########.fr       */
+/*   Created: 2022/09/11 16:37:19 by yjoo              #+#    #+#             */
+/*   Updated: 2022/09/12 19:01:30 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+static void	signal_handler(int signo)
 {
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	signal_setting();
-	while (1)
+	if (signo == SIGINT)
 	{
-		parse();
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
-	return (0);
+}
+
+void	signal_setting(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, signal_handler);
 }
