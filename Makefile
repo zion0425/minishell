@@ -6,7 +6,7 @@
 #    By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/10 14:08:26 by yjoo              #+#    #+#              #
-#    Updated: 2022/09/19 18:23:47 by yjoo             ###   ########.fr        #
+#    Updated: 2022/09/19 18:27:06 by yjoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,7 @@ ifeq ($(OS), Darwin)
 	RLINC = -lreadline -L${HOME}/.brew/opt/readline/lib
 	RLLIB = -I${HOME}/.brew/opt/readline/include
 else
-	RLINC = -lreadline -L/home/linuxbrew/.linuxbrew/opt/readline/lib
-	RLLIB = -I/home/linuxbrew/.linuxbrew/opt/readline/include
+	RLINC = -lreadline
 endif
 
 INCLUDE = -I./include
