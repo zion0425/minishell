@@ -6,7 +6,7 @@
 #    By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/10 14:08:26 by yjoo              #+#    #+#              #
-#    Updated: 2022/09/19 13:53:27 by yjoo             ###   ########.fr        #
+#    Updated: 2022/09/19 18:17:56 by yjoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,11 +16,17 @@ RM = rm -f
 NAME = minishell
 FSANI = -g3 -fsanitize=address
 
+OS = $(shell uname -s)
+
+ifeq ($(OS), Darwin)
+	RLINC = -lreadline -L${HOME}/.brew/opt/readline/lib
+	RLLIB = -I${HOME}/.brew/opt/readline/include
+else
+	RLINC = -lreadline -L${HOME}/.brew/opt/readline/lib
+	RLLIB = -I${HOME}/.brew/opt/readline/include
+endif
+
 INCLUDE = -I./include
-WRLINC = -lreadline -L/home/linuxbrew/.linuxbrew/opt/readline/lib
-WRLLIB = -I/home/linuxbrew/.linuxbrew/opt/readline/include
-#RLINC = -lreadline -L${HOME}/.brew/opt/readline/lib
-#RLLIB = -I${HOME}/.brew/opt/readline/include
 SRCS_DIR = ./srcs
 SRCS_FILES = main.c signal.c
 PARSE_DIR = ./srcs/parse
@@ -30,13 +36,13 @@ SRCS = $(addprefix $(addsuffix /, $(SRCS_DIR)), $(SRCS_FILES))\
 OBJS = $(SRCS:.c=.o)
 
 %.o: %.c
-	@$(CC) $(CFLAGS) $(WRLLIB) -c $< -o $@
+	@$(CC) $(CFLAGS) $(RLLIB) -c $< -o $@
 
 all : $(NAME)
 
 $(NAME) : $(OBJS)
 		@make -C ./libft/
-		@$(CC) $(INCLUDE) $^ $(WRLINC) ./libft/libft.a -o $@
+		@$(CC) $(INCLUDE) $^ $(RLINC) ./libft/libft.a -o $@
 		@echo "\033[32m"minishell_complete"\033[0m"
 
 re : fclean all
