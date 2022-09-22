@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:14:23 by siokim            #+#    #+#             */
-/*   Updated: 2022/09/22 16:45:13 by siokim           ###   ########.fr       */
+/*   Updated: 2022/09/22 19:20:38 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,24 +60,7 @@ void	ft_cmd(char **envp, char *cmd)
 	waitpid(pid, 0, 0);
 }
 
-void	ft_execve(char **envp, t_node *node)
-{
-	if (node != NULL)
-	{
-		if (node->type == PIPE)
-			ft_pipe(envp, node);
-		else if (node->type <= 4 && node->type >= 1)
-			ft_redirect(envp, node);
-		else if (node->type == COMMAND_LIST)
-			ft_cmd(envp, node->/*name*/);
-		if (node->left != NULL)
-			ft_execve(node->left);
-		if (node->right != NULL)
-			ft_execve(node->right);
-	}
-}
-
-void	ft_pipe(char **envp, t_node *node)
+void	ft_pipe(char **envp, t_cmd *node)
 {
 	int	pid;
 	int	pipefd[2];
@@ -88,15 +71,32 @@ void	ft_pipe(char **envp, t_node *node)
 	{
 		close(pipefd[0]);
 		dup2(pipefd[1], STDOUT_FILENO);
-		ft_execve(node->left);
+		ft_execve(envp, node->left);
 	}
 	else if (pid > 0)
 	{
 		waitpid(pid, 0, 0);
 		close(pipefd[1]);
 		dup2(pipefd[0], STDIN_FILENO);
-		ft_execve(node->right);
+		ft_execve(envp, node->right);
 	}
 	else
 		print_error("fork_error\n");
+}
+
+void	ft_execve(char **envp, t_cmd *node)
+{
+	if (node != NULL)
+	{
+		if (node->type == PIPE)
+			ft_pipe(envp, node);
+		else if (node->type <= 4 && node->type >= 1)
+			ft_redirect(envp, node);
+		else if (node->type == WORD)
+			ft_cmd(envp, node->cmd);
+		if (node->left != NULL)
+			ft_execve(envp ,node->left);
+		if (node->right != NULL)
+			ft_execve(envp, node->right);
+	}
 }

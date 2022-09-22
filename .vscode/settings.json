@@ -1,0 +1,9 @@
+{
+	"makefile.launchConfigurations": [
+		{
+			"cwd": "/goinfre/siokim/minishell",
+			"binaryPath": "/goinfre/siokim/minishell/minishell",
+			"binaryArgs": []
+		}
+	]
+}
