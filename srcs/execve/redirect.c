@@ -6,62 +6,54 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 13:44:11 by siokim            #+#    #+#             */
-/*   Updated: 2022/09/21 21:47:47 by siokim           ###   ########.fr       */
+/*   Updated: 2022/09/22 14:37:37 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void    ft_redirect(char **envp, t_node *node)
+void	ft_redirect(char **envp, t_node *node)
 {
-    if (node->type == REDIRIN)
-    {
-        if (node -> right -> type)
-        redirin(node);
-    }
+	if (node->type == REDIRIN)
+		redirin(node);
     else if (node->type == REDIROUT)
-    {
-
-    }
+		redirout(node);	
     else if (node->type == APPEND)
-    {
-
-    }
-    else if (node->type == HEREDOC)
-    {
-
-    }
+		append(node);
+	else 
+		heredoc(node);
 }
 
 void    redirin(t_node *node)
 {
-    // 유효성 검사 '<'
-    // if (node->right word)
+	int	fdin;
+
+	fdin = fileopen(node->/*right | left ->file_path | dir_path*/, INFILE);
+	dup2(fdin, STDIN_FILENO);
 }
 
 void    redirout(t_node *node)
 {
-    // 유효성 검사?? '>'
-    // left가 없을 경우 touch file
-    // if (node->right)
+	int	fdout;
+
+	fdout = fileopen(node->right/*->file_path*/, OUTFILE);
+	dup2(fdout, STDOUT_FILENO);
 }
+
 
 void    apeend(t_node *node)
 {
-    // 유효성 검사 '>>'
-    // left가 없을 경우 touch file
-    // if node->left cmd | node -> left file
+	int	fdout;
+
+	fdout = fileopen(node->right/*->file_path*/, APPEND);
+	dup2(fdout, STDOUT_FILENO);
 }
 
 void    heredoc(t_node *node)
 {
-    // 유효성 검사 '<<'
-    // if node->left cmd | node -> left file
-    /* 여기까지.
     char *end_str = node->right;
     while (1)
     {
-        
         str = readline("> ");
         if (!ft_strncmp(str, end_str))
         {
@@ -69,7 +61,5 @@ void    heredoc(t_node *node)
             
         }
     }
-    */
-    // end ft_redirect function 
 }
 
