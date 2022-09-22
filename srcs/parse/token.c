@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:09:42 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/19 13:56:16 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/22 23:21:13 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static void	input_token(t_token *new_token, char *line, int *idx)
 	else if (new_token->type == PIPE)
 		new_token->token = ft_strdup("|");
 	else if (new_token->type == DOLLAR)
-		new_token->token = ft_strdup("$");
+		new_token->token = dollar_token_handle(line, idx);
 	else if (new_token->type == QUOTE || new_token->type == DQUOTE)
 		new_token->token = quote_token_handle(line, idx);
 	else if (new_token->type == WORD)

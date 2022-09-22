@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 13:41:15 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/17 12:44:57 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/22 23:16:40 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	parse(void)
 	prompt(&line);
 	if (is_empty(line))
 	{
-		if (line != NULL)
+		if (line)
 			free(line);
 		return (0);
 	}
@@ -57,7 +57,7 @@ int	parse(void)
 	if (!create_token_list(line, &head_token))
 	{
 		free_token_list(head_token);
-		if (line != NULL)
+		if (line)
 			free(line);
 		return (0);
 	}

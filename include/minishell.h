@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/17 13:28:30 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/22 23:33:21 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define DOLLAR		8
 # define BUILTIN	9
 
+char						**g_envp;
 typedef struct s_token		t_token;
 typedef struct s_cmd		t_cmd;
 typedef struct s_cmd_list	t_cmd_list;
@@ -61,8 +62,10 @@ int		parse(void);
 int		is_empty(char *line);
 int		get_token_type(char *line, int idx);
 int		new_token(t_token **head_token, char *line, int *idx);
+char	*dollar_token_handle(char *line, int *idx);
 void	free_token_list(t_token *head_token);
 
+char	**get_envp(char **envp);
 void	signal_setting(void);
 
 void	show_token_list(t_token *head_token);//삭제예정
