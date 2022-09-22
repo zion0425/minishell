@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:14:23 by siokim            #+#    #+#             */
-/*   Updated: 2022/09/21 22:06:38 by siokim           ###   ########.fr       */
+/*   Updated: 2022/09/22 16:15:33 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_cmd(char **envp, char *cmd)
 		write(2, ": command not found\n", 20);
 		exit(127);
 	}
-	waitpid(pid , 0, 0);
+	waitpid(pid, 0, 0);
 }
 
 void	ft_execve(char **envp, t_node *node)
@@ -68,47 +68,33 @@ void	ft_execve(char **envp, t_node *node)
 			ft_pipe(envp, node);
 		else if (node->type <= 4 && node->type >= 1)
 			ft_redirect(envp, node);
-		else if (node->type == CMD)
-			if ()
+		else if (node->type == COMMAND_LIST)
+			ft_cmd(envp, node->/*name*/);
 	}
 	else if (node->right != NULL)
 		ft_execve(node->right);
-	else
-		ft_cmd(envp, node);
-
 }
 
 void	ft_pipe(char **envp, t_node *node)
 {
 	int	pid;
+	int	pipefd[2];
 
-	// 유효성 검사
-	// pipe 앞에 cmd가 없을 경우 error
-	// pipe 뒤에 cmd가 없을 경우 readline (pipe > ) 실행하여 cmd 값 추가 입력
+	pipe(pipefd);
 	pid = fork();
 	if (pid == 0)
-		ft_execve(node->right);
-	else if (pid > 0)
+	{
+		close(pipefd[0]);
+		dup2(pipefd[1], STDOUT_FILENO);
 		ft_execve(node->left);
+	}
+	else if (pid > 0)
+	{
+		waitpid(pid, 0, 0);
+		close(pipefd[1]);
+		dup2(pipefd[0], STDIN_FILENO);
+		ft_execve(node->right);
+	}
 	else
-		write(2, "fork_error\n", 11);
-
-
+		print_error("fork_error\n");
 }
-
-void	ft_echo()
-{
-
-}
-
-void	ft_cd()
-{
-
-}
-
-// bulit in 함수로 cd 구현시 pwd 경로를 잡아주는지 확인 필요.
-void	ft_pwd();
-void	ft_export();
-void	ft_unset();
-void	ft_env();
-void	ft_exit();

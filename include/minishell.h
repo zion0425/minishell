@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/22 14:44:47 by siokim           ###   ########.fr       */
+/*   Updated: 2022/09/22 16:13:21 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <string.h>
-e
+
 # define INFILE		0
 # define OUTFILE	1
 # define WORD		0
@@ -40,6 +40,7 @@ typedef struct s_token		t_token;
 typedef struct s_cmd		t_cmd;
 typedef struct s_cmd_list	t_cmd_list;
 
+void	print_error(char *err_msg);
 void	ft_cmd(char **envp, char *cmd);
 int		openfile(char *filename, char format);
 

@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 13:44:11 by siokim            #+#    #+#             */
-/*   Updated: 2022/09/22 14:37:37 by siokim           ###   ########.fr       */
+/*   Updated: 2022/09/22 15:44:37 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void    redirout(t_node *node)
 
 	fdout = fileopen(node->right/*->file_path*/, OUTFILE);
 	dup2(fdout, STDOUT_FILENO);
+	ft_execve(node->left);
 }
 
 
@@ -47,6 +48,7 @@ void    apeend(t_node *node)
 
 	fdout = fileopen(node->right/*->file_path*/, APPEND);
 	dup2(fdout, STDOUT_FILENO);
+	ft_cmd(node->left);
 }
 
 void    heredoc(t_node *node)

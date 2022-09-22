@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 14:15:39 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/17 14:15:43 by siokim           ###   ########.fr       */
+/*   Updated: 2022/09/22 16:22:57 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
-	(void)argv;
 
 	signal_setting();
 	while (1)
 	{
 		parse();
+		ft_execve(node, envp);	
 	}
 	return (0);
 }
