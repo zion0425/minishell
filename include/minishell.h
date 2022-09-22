@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/17 14:14:16 by siokim           ###   ########.fr       */
+/*   Updated: 2022/09/22 14:44:47 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
-# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <stdio.h>
 # include <signal.h>
 # include <sys/stat.h>
-
+# include <errno.h>
+# include <fcntl.h>
+# include <string.h>
+e
+# define INFILE		0
+# define OUTFILE	1
 # define WORD		0
 # define REDIRIN	1
 # define REDIROUT	2
@@ -36,8 +41,9 @@ typedef struct s_cmd		t_cmd;
 typedef struct s_cmd_list	t_cmd_list;
 
 void	ft_cmd(char **envp, char *cmd);
+int		openfile(char *filename, char format);
 
-typedef struct s_token
+struct s_token
 {
 	int		type;
 	char	*token;
@@ -69,12 +75,5 @@ void	free_token_list(t_token *head_token);
 void	signal_setting(void);
 
 void	show_token_list(t_token *head_token);//삭제예정
-
-typedef struct s_cmd_list
-{
-	t_cmd	*head;
-	t_cmd	*tail;
-	int		size;
-}	t_cmd_list;
 
 #endif
