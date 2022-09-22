@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 13:41:15 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/22 23:16:40 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/22 23:40:19 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ static void	prompt(char **line)
 		ft_putstr_fd("\x1b[1A\033[12Cexit\n", STDOUT_FILENO);
 		exit(EXIT_SUCCESS);
 	}
+}
+
+int	create_parse_tree(t_cmd_list cmd_list, t_token *head_token)
+{
+	
 }
 
 int	create_token_list(char *line, t_token **head_token)
@@ -41,7 +46,7 @@ int	create_token_list(char *line, t_token **head_token)
 	return (1);
 }
 
-int	parse(void)
+int	parse(t_cmd_list *cmd_list)
 {
 	char	*line;
 	t_token	*head_token;
@@ -61,9 +66,8 @@ int	parse(void)
 			free(line);
 		return (0);
 	}
-	show_token_list(head_token);
 	add_history(line);
-	free_token_list(head_token);
 	free(line);
+	free_token_list(head_token);
 	return (1);
 }

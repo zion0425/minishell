@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/22 23:33:21 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/22 23:39:11 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ struct s_cmd_list
 	int		size;
 };
 
-int		parse(void);
+int		parse(t_cmd_list *cmd_list);
 int		is_empty(char *line);
 int		get_token_type(char *line, int idx);
 int		new_token(t_token **head_token, char *line, int *idx);
