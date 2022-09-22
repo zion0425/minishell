@@ -6,11 +6,13 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 13:44:11 by siokim            #+#    #+#             */
-/*   Updated: 2022/09/17 13:44:14 by siokim           ###   ########.fr       */
+/*   Updated: 2022/09/21 21:47:47 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void    ft_redirect(t_node *node)
+#include "../../include/minishell.h"
+
+void    ft_redirect(char **envp, t_node *node)
 {
     if (node->type == REDIRIN)
     {
@@ -70,3 +72,4 @@ void    heredoc(t_node *node)
     */
     // end ft_redirect function 
 }
+
