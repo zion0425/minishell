@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:14:23 by siokim            #+#    #+#             */
-/*   Updated: 2022/09/22 16:15:33 by siokim           ###   ########.fr       */
+/*   Updated: 2022/09/22 16:45:13 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,11 @@ void	ft_execve(char **envp, t_node *node)
 			ft_redirect(envp, node);
 		else if (node->type == COMMAND_LIST)
 			ft_cmd(envp, node->/*name*/);
+		if (node->left != NULL)
+			ft_execve(node->left);
+		if (node->right != NULL)
+			ft_execve(node->right);
 	}
-	else if (node->right != NULL)
-		ft_execve(node->right);
 }
 
 void	ft_pipe(char **envp, t_node *node)
