@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 13:41:15 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/22 23:40:19 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/23 08:08:10 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static void	prompt(char **line)
 
 int	create_parse_tree(t_cmd_list cmd_list, t_token *head_token)
 {
-	
+	envp_to_word(head_token);
+	//syntax_pipe(head_token);
 }
 
 int	create_token_list(char *line, t_token **head_token)

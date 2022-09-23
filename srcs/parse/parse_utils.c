@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 20:20:41 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/22 23:32:25 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/23 08:01:12 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,21 @@ int	is_empty(char *line)
 			return (0);
 	}
 	return (1);
+}
+
+t_token	*serach_token(t_token *head, int type)
+{
+	t_token	*ret;
+
+	ret = head;
+	while (ret->next)
+	{
+		if (ret->type == type)
+			return (ret);
+		ret = ret->next;
+	}
+	ret = head;
+	return (ret);
 }
 
 char	**get_envp(char **envp)
