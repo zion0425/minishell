@@ -1,28 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/16 18:42:35 by yjoo              #+#    #+#             */
-/*   Updated: 2021/12/16 16:32:28 by yjoo             ###   ########.fr       */
+/*   Created: 2022/09/23 13:10:39 by yjoo              #+#    #+#             */
+/*   Updated: 2022/09/23 13:10:39 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	**get_envp(char **envp)
 {
-	size_t	str_size;
-	char	*str;
+	int		idx;
+	char	**ret;
 
-	if (!s1 || !s2)
+	idx = 0;
+	while (envp[idx])
+		idx++;
+	ret = ft_calloc(sizeof(char *), idx + 1);
+	if (!ret)
 		return (NULL);
-	str_size = ft_strlen(s1) + ft_strlen(s2);
-	str = (char *)malloc(sizeof(char) * (str_size + 1));
-	if (!str)
-		return (NULL);
-	ft_strlcpy(str + ft_strlcpy(str, s1, (str_size + 1)), s2, (str_size + 1));
-	return (str);
+	idx = -1;
+	while (envp[++idx])
+		ret[idx] = ft_strdup(envp[idx]);
+	ret[idx] = NULL;
+	return (ret);
+}
+
+void	free_split(char **split)
+{
+	size_t	i;
+
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
 }

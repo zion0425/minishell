@@ -6,94 +6,126 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:16:32 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/23 09:22:02 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/26 13:46:20 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	envp_to_word(t_token *head_token)
+char	*dollar_token_handle(char *line, int *idx)
+{
+	int		start;
+	char	*ret;
+
+	(*idx)++;
+	start = *idx;
+	while (line[*idx] && !(line[*idx] == ' ' || \
+		(line[*idx] >= 9 && line[*idx] <= 13)))
+	{
+		if (get_token_type(line, *idx) != WORD)
+			break ;
+		(*idx)++;
+	}
+	ret = ft_substr(line, start, *idx - start);
+	if (!ret)
+		return (NULL);
+	(*idx)--;
+	return (ret);
+}
+
+char	*check_envp(char *str, int idx)
+{
+	char	*ret;
+	char	**envp_split;
+
+	envp_split = ft_split(g_envp[idx], '=');
+	if (ft_strlen(str) == ft_strlen(envp_split[0]))
+	{
+		ret = ft_strdup(envp_split[1]);
+		free_split(envp_split);
+		return (ret);
+	}
+	else
+	{
+		free_split(envp_split);
+		return (NULL);
+	}
+}
+
+char	*find_value(char *key)
 {
 	int		idx;
-	t_token	*cur_token;
-	char	*tmp;
+	char	*ret;
 	char	**split;
 
-	cur_token = serach_token(head_token, DOLLAR);
-	split = ft_split(cur_token->token, '=');
 	idx = -1;
-	if (cur_token->type == DOLLAR)
+	while (g_envp[++idx])
 	{
-		while (g_envp[++idx])
+		if (ft_strncmp(g_envp[idx], key, ft_strlen(key)) == 0)
 		{
-			if (ft_strncmp(split[0], g_envp[idx], ft_strlen(split[0]) == 0))
+			split = ft_split(g_envp[idx], '=');
+			if (ft_strlen(split[0]) == ft_strlen(key))
 			{
-				if (split[1] != NULL)
-				{
-					idx = -1;
-					while (split[++idx])
-						tmp = ft_strjoin(tmp, split[idx]);
-				}
-				else
-					tmp = ft_strdup("");
+				ret = ft_strdup(split[1]);
+				free(key);
 				free_split(split);
-				split = ft_split(g_envp[idx], '=');
-				tmp = ft_strjoin(split[1], tmp);
+				return (ret);
 			}
+			else
+				free_split(split);
+		}
+	}
+	free(key);
+	ret = ft_strdup("");
+	return (ret);
+}
+
+void	dollar_to_word(t_token *head_token, int type, char *tmp)
+{
+	int		idx;
+	char	*value;
+	t_token	*cur;
+
+	cur = serach_token(head_token, type);
+	idx = -1;
+	if (cur->type == type)
+	{
+		while (cur->token[++idx])
+		{
+			if (cur->token[idx + 1] == '=')
+			{
+				idx++;
+				tmp = ft_substr(cur->token, idx, ft_strlen(cur->token) - idx);
+				break ;
+			}
+		}
+		if (cur->token[idx] == '\0')
+			tmp = ft_strdup("");
+		value = find_value(ft_substr(cur->token, 0, idx));
+		free(cur->token);
+		cur->token = ft_strjoin(value, tmp);
+		free(tmp);
+		free(value);
+	}
+}
+
+void	dquote_dollar_to_word(t_token *head_token)
+{
+	int		idx;
+	t_token	*cur;
+
+	cur = serach_token(head_token, DQUOTE);
+	idx = -1;
+	while (cur->token[++idx])
+	{
+		if (cur->token[idx] == '$')
+		{
+			idx++;
+			dollar_to_word(cur, DQUOTE, NULL);
 		}
 	}
 }
 
-int	get_token_type(char *line, int idx)
-{
-	if (line[idx] == '<')
-	{
-		if (line[idx + 1] && line[idx + 1] == '<')
-			return (HEREDOC);
-		return (REDIRIN);
-	}
-	else if (line[idx] == '>')
-	{
-		if (line[idx + 1] && line[idx + 1] == '>')
-			return (APPEND);
-		return (REDIROUT);
-	}
-	else if (line[idx] == '|')
-		return (PIPE);
-	else if (line[idx] == '\'')
-		return (QUOTE);
-	else if (line[idx] == '"')
-		return (DQUOTE);
-	else if (line[idx] == '$')
-		return (DOLLAR);
-	return (WORD);
-}
-
-void	free_token_list(t_token *head_token)
-{
-	t_token	*tmp;
-
-	tmp = head_token;
-	while (tmp)
-	{
-		head_token = head_token->next;
-		free(tmp);
-		tmp = head_token;
-	}
-}
-
-void	free_split(char **split)
-{
-	size_t	i;
-
-	i = 0;
-	while (split[i])
-	{
-		free(split[i]);
-		i++;
-	}
-	free(split);
-}
 //삭제예정
 void	show_token_list(t_token *head_token)
 {

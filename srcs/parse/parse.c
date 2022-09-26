@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 13:41:15 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/23 08:08:10 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/26 13:51:35 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,13 @@ static void	prompt(char **line)
 	}
 }
 
-int	create_parse_tree(t_cmd_list cmd_list, t_token *head_token)
+int	create_parse_tree(t_cmd_list *cmd_list, t_token *head_token)
 {
-	envp_to_word(head_token);
+	(void)cmd_list;
+	dollar_to_word(head_token, DOLLAR, NULL);
+	dquote_dollar_to_word(head_token);
 	//syntax_pipe(head_token);
+	return (1);
 }
 
 int	create_token_list(char *line, t_token **head_token)
@@ -67,8 +70,10 @@ int	parse(t_cmd_list *cmd_list)
 			free(line);
 		return (0);
 	}
+	create_parse_tree(cmd_list, head_token);
+	show_token_list(head_token);
+	free_token_list(head_token);
 	add_history(line);
 	free(line);
-	free_token_list(head_token);
 	return (1);
 }

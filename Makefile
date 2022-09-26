@@ -6,7 +6,7 @@
 #    By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/10 14:08:26 by yjoo              #+#    #+#              #
-#    Updated: 2022/09/23 07:59:36 by yjoo             ###   ########.fr        #
+#    Updated: 2022/09/26 08:48:08 by yjoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,9 +27,9 @@ endif
 
 INCLUDE = -I./include
 SRCS_DIR = ./srcs
-SRCS_FILES = main.c signal.c
+SRCS_FILES = main.c signal.c utils.c
 PARSE_DIR = ./srcs/parse
-PARSE_FILES = parse.c parse_utils.c token.c token2.c syntax.c
+PARSE_FILES = parse.c parse_utils.c token.c token2.c #syntax.c
 SRCS = $(addprefix $(addsuffix /, $(SRCS_DIR)), $(SRCS_FILES))\
 		$(addprefix $(addsuffix /, $(PARSE_DIR)), $(PARSE_FILES))
 OBJS = $(SRCS:.c=.o)
@@ -41,7 +41,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJS)
 		@make -C ./libft/
-		@$(CC) $(INCLUDE) $^ $(RLINC) ./libft/libft.a -o $@
+		@$(CC) $(FSANI) $(INCLUDE) $^ $(RLINC) ./libft/libft.a -o $@
 		@echo "\033[32m"minishell_complete"\033[0m"
 
 re : fclean all

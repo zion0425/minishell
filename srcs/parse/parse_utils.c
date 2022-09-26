@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 20:20:41 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/23 08:01:12 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/26 13:53:26 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,41 @@ t_token	*serach_token(t_token *head, int type)
 	return (ret);
 }
 
-char	**get_envp(char **envp)
+int	get_token_type(char *line, int idx)
 {
-	int		idx;
-	char	**ret;
+	if (line[idx] == '<')
+	{
+		if (line[idx + 1] && line[idx + 1] == '<')
+			return (HEREDOC);
+		return (REDIRIN);
+	}
+	else if (line[idx] == '>')
+	{
+		if (line[idx + 1] && line[idx + 1] == '>')
+			return (APPEND);
+		return (REDIROUT);
+	}
+	else if (line[idx] == '|')
+		return (PIPE);
+	else if (line[idx] == '\'')
+		return (QUOTE);
+	else if (line[idx] == '"')
+		return (DQUOTE);
+	else if (line[idx] == '$')
+		return (DOLLAR);
+	return (WORD);
+}
 
-	idx = 0;
-	while (envp[idx])
-		idx++;
-	ret = ft_calloc(sizeof(char *), idx + 1);
-	if (!ret)
-		return (NULL);
-	idx = -1;
-	while (envp[++idx])
-		ret[idx] = ft_strdup(envp[idx]);
-	ret[idx] = NULL;
-	return (ret);
+void	free_token_list(t_token *head_token)
+{
+	t_token	*tmp;
+
+	tmp = head_token;
+	while (tmp)
+	{
+		head_token = head_token->next;
+		free(tmp->token);
+		free(tmp);
+		tmp = head_token;
+	}
 }

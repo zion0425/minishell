@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:09:42 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/23 08:15:33 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/23 12:44:59 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	add_token_list(t_token **head_token, t_token **new_token)
 	return (1);
 }
 
-static char	*token_handle(char *line, int *idx)
+static char	*word_token_handle(char *line, int *idx)
 {
 	int		start;
 	char	*ret;
@@ -96,11 +96,11 @@ static void	input_token(t_token *new_token, char *line, int *idx)
 	else if (new_token->type == PIPE)
 		new_token->token = ft_strdup("|");
 	else if (new_token->type == DOLLAR)
-		new_token->token = token_handle(line, idx);
+		new_token->token = dollar_token_handle(line, idx);
 	else if (new_token->type == QUOTE || new_token->type == DQUOTE)
 		new_token->token = quote_token_handle(line, idx);
 	else if (new_token->type == WORD)
-		new_token->token = token_handle(line, idx);
+		new_token->token = word_token_handle(line, idx);
 }
 
 int	new_token(t_token **head_token, char *line, int *idx)
