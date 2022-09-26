@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/22 19:12:27 by siokim           ###   ########.fr       */
+/*   Updated: 2022/09/26 20:40:21 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ struct s_cmd
 	t_cmd	*right;
 };
 
-// head tail둘 다 필요 없음, 더미노드 없이 left right로 깊이 우선 탐색 가능
 struct s_cmd_list
 {
 	t_cmd	*head;

@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 13:44:11 by siokim            #+#    #+#             */
-/*   Updated: 2022/09/22 19:14:48 by siokim           ###   ########.fr       */
+/*   Updated: 2022/09/26 19:03:32 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	redirin(t_cmd *node)
 {
 	int fdin;
 	
-	fdin = openfile(node->right->cmd, INFILE);
+	fdin = openfile(node->left->cmd, INFILE);
 	dup2(fdin, STDIN_FILENO);
 }
 
@@ -26,7 +26,7 @@ void	redirout(t_cmd *node, char **envp)
 
 	fdout = openfile(node->right->cmd, OUTFILE);
 	dup2(fdout, STDOUT_FILENO);
-	ft_execve(envp, node->left);
+	ft_cmd(envp, node->left->cmd);
 }
 
 

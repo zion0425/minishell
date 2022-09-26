@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:14:23 by siokim            #+#    #+#             */
-/*   Updated: 2022/09/22 19:20:38 by siokim           ###   ########.fr       */
+/*   Updated: 2022/09/26 20:44:12 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	ft_pipe(char **envp, t_cmd *node)
 	int	pipefd[2];
 
 	pipe(pipefd);
+	write (2, "error\n", 6);
+
 	pid = fork();
 	if (pid == 0)
 	{
@@ -75,28 +77,36 @@ void	ft_pipe(char **envp, t_cmd *node)
 	}
 	else if (pid > 0)
 	{
-		waitpid(pid, 0, 0);
 		close(pipefd[1]);
 		dup2(pipefd[0], STDIN_FILENO);
+		waitpid(pid, 0, 0);
 		ft_execve(envp, node->right);
 	}
 	else
 		print_error("fork_error\n");
 }
 
+// WORD means file, cmd
 void	ft_execve(char **envp, t_cmd *node)
 {
 	if (node != NULL)
 	{
 		if (node->type == PIPE)
+		{
 			ft_pipe(envp, node);
-		else if (node->type <= 4 && node->type >= 1)
-			ft_redirect(envp, node);
+			return ;
+		}
+		if (node->left->type == WORD)
+		{
+			if (node->type <= 4 && node->type >= 1)
+				ft_redirect(envp, node);
+			else
+				ft_cmd(envp, node->left->cmd);
+		}
 		else if (node->type == WORD)
 			ft_cmd(envp, node->cmd);
-		if (node->left != NULL)
-			ft_execve(envp ,node->left);
-		if (node->right != NULL)
-			ft_execve(envp, node->right);
+		ft_execve(envp, node->left);
+		ft_execve(envp, node->right);
 	}
 }
+

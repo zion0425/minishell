@@ -5,5 +5,8 @@
 			"binaryPath": "/goinfre/siokim/minishell/minishell",
 			"binaryArgs": []
 		}
-	]
+	],
+	"files.associations": {
+		"minishell.h": "c"
+	}
 }
