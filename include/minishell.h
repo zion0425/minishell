@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/26 13:21:59 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/26 20:26:17 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ int		parse(t_cmd_list *cmd_list);
 int		is_empty(char *line);
 int		get_token_type(char *line, int idx);
 int		new_token(t_token **head_token, char *line, int *idx);
-char	*dollar_token_handle(char *line, int *idx);
+char	*dollar_token_handle(char *line, int *idx, t_token *token);
 t_token	*serach_token(t_token *head, int type);
 void	dollar_to_word(t_token *head_token, int type, char *tmp);
-void	dquote_dollar_to_word(t_token *head_token);
+void	dquote_dollar_to_word(t_token *head_token, char *tmp);
 void	syntax_pipe(t_token *head_token);
 void	free_token_list(t_token *head_token);
 void	free_split(char **split);

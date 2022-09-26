@@ -6,13 +6,13 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:16:32 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/26 13:46:20 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/26 19:10:39 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	*dollar_token_handle(char *line, int *idx)
+char	*dollar_token_handle(char *line, int *idx, t_token *new)
 {
 	int		start;
 	char	*ret;
@@ -26,7 +26,13 @@ char	*dollar_token_handle(char *line, int *idx)
 			break ;
 		(*idx)++;
 	}
-	ret = ft_substr(line, start, *idx - start);
+	if (start == *idx)
+	{
+		ret = ft_strdup("$");
+		new->type = WORD;
+	}
+	else
+		ret = ft_substr(line, start, *idx - start);
 	if (!ret)
 		return (NULL);
 	(*idx)--;
@@ -92,9 +98,8 @@ void	dollar_to_word(t_token *head_token, int type, char *tmp)
 	{
 		while (cur->token[++idx])
 		{
-			if (cur->token[idx + 1] == '=')
+			if (cur->token[idx] == '=')
 			{
-				idx++;
 				tmp = ft_substr(cur->token, idx, ft_strlen(cur->token) - idx);
 				break ;
 			}
@@ -109,19 +114,33 @@ void	dollar_to_word(t_token *head_token, int type, char *tmp)
 	}
 }
 
-void	dquote_dollar_to_word(t_token *head_token)
+void	dquote_dollar_to_word(t_token *head_token, char *tmp)
 {
 	int		idx;
+	int		start;
+	char	*value;
 	t_token	*cur;
 
 	cur = serach_token(head_token, DQUOTE);
 	idx = -1;
 	while (cur->token[++idx])
 	{
-		if (cur->token[idx] == '$')
+		if (cur->token[idx - 1] == '$')
 		{
-			idx++;
-			dollar_to_word(cur, DQUOTE, NULL);
+			start = idx;
+			while (cur->token[idx] && !(cur->token[idx] == ' ' || \
+				(cur->token[idx] >= 9 && cur->token[idx] <= 13)) && \
+				cur->token[idx] != '=')
+				idx++;
+			if (cur->token[idx] == '\0')
+				tmp = ft_strdup("");
+			else
+				tmp = ft_substr(cur->token, idx, ft_strlen(cur->token) - idx);
+			value = find_value(ft_substr(cur->token, start, idx - start));
+			free(cur->token);
+			cur->token = ft_strjoin(value, tmp);
+			free(value);
+			free(tmp);
 		}
 	}
 }

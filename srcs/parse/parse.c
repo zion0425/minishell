@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 13:41:15 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/26 13:51:35 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/26 17:37:55 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	create_parse_tree(t_cmd_list *cmd_list, t_token *head_token)
 {
 	(void)cmd_list;
 	dollar_to_word(head_token, DOLLAR, NULL);
-	dquote_dollar_to_word(head_token);
+	dquote_dollar_to_word(head_token, NULL);
 	//syntax_pipe(head_token);
 	return (1);
 }
