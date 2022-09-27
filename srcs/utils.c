@@ -30,6 +30,11 @@ char	**get_envp(char **envp)
 	return (ret);
 }
 
+int	is_whitespace(char c)
+{
+	return ((c == ' ' || (c >= 9 && c <= 13)));
+}
+
 void	free_split(char **split)
 {
 	size_t	i;

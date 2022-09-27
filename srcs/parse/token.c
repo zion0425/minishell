@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:09:42 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/26 17:26:29 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/27 05:38:25 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ static char	*word_token_handle(char *line, int *idx)
 	char	*ret;
 
 	start = *idx;
-	while (line[*idx] && !(line[*idx] == ' ' || \
-		(line[*idx] >= 9 && line[*idx] <= 13)))
+	while (line[*idx] && !is_whitespace(line[*idx]))
 	{
 		if (get_token_type(line, *idx) != WORD)
 			break ;

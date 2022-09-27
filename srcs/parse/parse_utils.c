@@ -6,11 +6,37 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 20:20:41 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/26 13:53:26 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/27 05:42:58 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+char	*dollar_token_handle(char *line, int *idx, t_token *new)
+{
+	int		start;
+	char	*ret;
+
+	(*idx)++;
+	start = *idx;
+	while (line[*idx] && !is_whitespace(line[*idx]))
+	{
+		if (get_token_type(line, *idx) != WORD)
+			break ;
+		(*idx)++;
+	}
+	if (start == *idx)
+	{
+		ret = ft_strdup("$");
+		new->type = WORD;
+	}
+	else
+		ret = ft_substr(line, start, *idx - start);
+	if (!ret)
+		return (NULL);
+	(*idx)--;
+	return (ret);
+}
 
 int	is_empty(char *line)
 {

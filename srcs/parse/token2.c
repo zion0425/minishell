@@ -6,57 +6,11 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:16:32 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/26 19:10:39 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/27 14:40:20 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-char	*dollar_token_handle(char *line, int *idx, t_token *new)
-{
-	int		start;
-	char	*ret;
-
-	(*idx)++;
-	start = *idx;
-	while (line[*idx] && !(line[*idx] == ' ' || \
-		(line[*idx] >= 9 && line[*idx] <= 13)))
-	{
-		if (get_token_type(line, *idx) != WORD)
-			break ;
-		(*idx)++;
-	}
-	if (start == *idx)
-	{
-		ret = ft_strdup("$");
-		new->type = WORD;
-	}
-	else
-		ret = ft_substr(line, start, *idx - start);
-	if (!ret)
-		return (NULL);
-	(*idx)--;
-	return (ret);
-}
-
-char	*check_envp(char *str, int idx)
-{
-	char	*ret;
-	char	**envp_split;
-
-	envp_split = ft_split(g_envp[idx], '=');
-	if (ft_strlen(str) == ft_strlen(envp_split[0]))
-	{
-		ret = ft_strdup(envp_split[1]);
-		free_split(envp_split);
-		return (ret);
-	}
-	else
-	{
-		free_split(envp_split);
-		return (NULL);
-	}
-}
 
 char	*find_value(char *key)
 {
@@ -65,11 +19,11 @@ char	*find_value(char *key)
 	char	**split;
 
 	idx = -1;
-	while (g_envp[++idx])
+	while (g_var.envp[++idx])
 	{
-		if (ft_strncmp(g_envp[idx], key, ft_strlen(key)) == 0)
+		if (ft_strncmp(g_var.envp[idx], key, ft_strlen(key)) == 0)
 		{
-			split = ft_split(g_envp[idx], '=');
+			split = ft_split(g_var.envp[idx], '=');
 			if (ft_strlen(split[0]) == ft_strlen(key))
 			{
 				ret = ft_strdup(split[1]);
@@ -86,63 +40,85 @@ char	*find_value(char *key)
 	return (ret);
 }
 
-void	dollar_to_word(t_token *head_token, int type, char *tmp)
+char	*reassembly_str(char *cur, char *tmp, int idx)
 {
-	int		idx;
+	char	*ret;
 	char	*value;
-	t_token	*cur;
 
-	cur = serach_token(head_token, type);
-	idx = -1;
-	if (cur->type == type)
+	if (ft_strlen(cur) == 1 && cur[0] == '?')
+		ret = ft_itoa(g_var.exit_code);
+	else
 	{
-		while (cur->token[++idx])
+		while (cur[++idx])
 		{
-			if (cur->token[idx] == '=')
+			if (!ft_isalnum(cur[idx]))
 			{
-				tmp = ft_substr(cur->token, idx, ft_strlen(cur->token) - idx);
+				tmp = ft_substr(cur, idx, ft_strlen(cur) - idx);
 				break ;
 			}
 		}
-		if (cur->token[idx] == '\0')
+		if (!tmp && cur[idx] == '\0')
 			tmp = ft_strdup("");
-		value = find_value(ft_substr(cur->token, 0, idx));
-		free(cur->token);
-		cur->token = ft_strjoin(value, tmp);
+		value = find_value(ft_substr(cur, 0, idx));
+		ret = ft_strjoin(value, tmp);
 		free(tmp);
 		free(value);
 	}
+	free(cur);
+	return (ret);
 }
 
-void	dquote_dollar_to_word(t_token *head_token, char *tmp)
+char	*dquote_dollar(char *cur, int *idx)
+{
+	int		start;
+	char	*tmp;
+	char	*ret;
+
+	start = *idx;
+	while (cur[*idx] && ft_isalnum(cur[*idx]) && !is_whitespace(cur[*idx]))
+		(*idx)++;
+	tmp = ft_strsub(cur, start, (*idx) - start);
+	if (tmp[0] != '\0');
+		ret = reassembly_str(tmp, NULL, -1);
+	else
+		
+}
+
+char	*check_dquote(char *cur)
 {
 	int		idx;
-	int		start;
-	char	*value;
-	t_token	*cur;
+	char	*ret;
 
-	cur = serach_token(head_token, DQUOTE);
 	idx = -1;
-	while (cur->token[++idx])
+	if (ft_strlen(cur) == 0)
+		return (cur);
+	ret = ft_strdup("");
+	while (cur[++idx])
 	{
-		if (cur->token[idx - 1] == '$')
+		if (cur[idx] == '$')
 		{
-			start = idx;
-			while (cur->token[idx] && !(cur->token[idx] == ' ' || \
-				(cur->token[idx] >= 9 && cur->token[idx] <= 13)) && \
-				cur->token[idx] != '=')
-				idx++;
-			if (cur->token[idx] == '\0')
-				tmp = ft_strdup("");
-			else
-				tmp = ft_substr(cur->token, idx, ft_strlen(cur->token) - idx);
-			value = find_value(ft_substr(cur->token, start, idx - start));
-			free(cur->token);
-			cur->token = ft_strjoin(value, tmp);
-			free(value);
-			free(tmp);
+			idx++;
+			dquote_dollar(cur, &idx);
 		}
 	}
+	return (ret);
+}
+
+int	envp_convert(t_token *head, int cnt)
+{
+	int		idx;
+	t_token	*cur;
+
+	idx = -1;
+	cur = head;
+	while (++idx < cnt)
+	{
+		if (cur->type == DOLLAR)
+			cur->token = reassembly_str(cur->token, NULL, -1);
+		if (cur->type == DQUOTE)
+			cur->token = check_dquote(cur->token);
+	}
+	return (1);
 }
 
 //삭제예정
