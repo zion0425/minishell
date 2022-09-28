@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:14:23 by siokim            #+#    #+#             */
-/*   Updated: 2022/09/29 05:58:25 by siokim           ###   ########.fr       */
+/*   Updated: 2022/09/29 06:41:12 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,51 +60,44 @@ void	ft_cmd(char *cmd)
 	waitpid(pid, 0, 0);
 }
 
-// void	ft_pipe(char **envp, t_cmd *node)
-// {
-// 	int	pid;
-// 	int	pipefd[2];
+void	ft_pipe(t_cmd *node)
+{
+	int	pid;
+	int	pipefd[2];
 
-// 	pipe(pipefd);
-// 	write (2, "error\n", 6);
+	pipe(pipefd);
+	pid = fork();
+	if (pid == 0)
+	{
+		close(pipefd[0]);
+		dup2(pipefd[1], STDOUT_FILENO);
 
-// 	pid = fork();
-// 	if (pid == 0)
-// 	{
-// 		close(pipefd[0]);
-// 		dup2(pipefd[1], STDOUT_FILENO);
+	}
+	else if (pid > 0)
+	{
+		close(pipefd[1]);
+		dup2(pipefd[0], STDIN_FILENO);
+		waitpid(pid, 0, 0);
 
-// 	}
-// 	else if (pid > 0)
-// 	{
-// 		close(pipefd[1]);
-// 		dup2(pipefd[0], STDIN_FILENO);
-// 		waitpid(pid, 0, 0);
-
-// 	}
-// 	else
-// 		print_error("fork_error\n");
-// }
+	}
+	else
+		print_error("fork_error\n");
+}
 
 void	ft_execve(t_cmd_list *cmds)
 {
 	t_cmd	*node;
 
 	node = cmds->head;
-
-	while (node)
+	while (node && node->type != PIPE)
 	{
-		/*
-		pipe로 프로세스 생성
-		*/
-		if (node->type == WORD)
-		{
 
+		if (node->type == WORD)
 			if (node->next->type >= REDIRIN && node->next->type <= APPEND)
-			{
 				ft_redirect(node);
-			}
-		}
 		node = node->next;
+		if (cmds->size != 0)
+			ft_pipe(node);
 	}
+
 }
