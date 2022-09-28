@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 14:15:39 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/26 20:14:18 by siokim           ###   ########.fr       */
+/*   Updated: 2022/09/29 05:50:46 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,40 +16,36 @@ int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	
-	t_cmd	node1;
-	t_cmd	node2;
-	t_cmd	node3;
-	t_cmd	node4;
-	t_cmd	node6;
-	node1.cmd = "|";
-	node1.left = &node2;
-	node1.right = &node6;
-	node1.type = PIPE;
-	
-	node2.cmd = ">";
-	node2.left = &node3;
-	node2.right = &node4;
-	node2.type = REDIROUT;
-	
-	node3.cmd = "ls -al";
-	node3.left = NULL;
-	node3.right = NULL;
-	node3.type = WORD;
-
-	node4.cmd = "a.txt";
-	node4.left = NULL;
-	node4.right = NULL;
-	node4.type = WORD;
-	
-	node6.cmd = "wc -l";
-	node6.left = NULL;
-	node6.right = NULL;
-	node6.type = WORD;
-
+	g_var.envp = envp;
 	signal_setting();
     // char *str;
-	ft_execve(envp, &node1);
+
+	t_cmd a;
+	t_cmd b;
+	t_cmd c;
+	t_cmd_list list;
+	
+	a.type = WORD;
+	a.cmd = "ls";
+	a.next = &b;
+	a.prev = 0;
+
+	b.type = REDIROUT;
+	b.cmd = ">";
+	b.next = &c;
+	b.prev = &a;
+
+	c.type = WORD;
+	c.cmd = "a";
+	c.next = 0;
+	c.prev = &b;
+
+
+	list.head = &a;
+	list.tail = &c;
+	list.size = 0;
+
+	ft_execve(&list);
 
     // while(1)
     // {

@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/26 20:40:21 by siokim           ###   ########.fr       */
+/*   Updated: 2022/09/29 05:09:08 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,19 @@ typedef struct s_cmd		t_cmd;
 typedef struct s_cmd_list	t_cmd_list;
 
 void	print_error(char *err_msg);
-void	ft_execve(char **envp, t_cmd *node);
+void	ft_execve(t_cmd_list *cmds);
 int		openfile(char *filename, char format);
-void	ft_redirect(char **envp, t_cmd *node);
-void	ft_cmd(char **envp, char *cmd);
+void	ft_redirect(t_cmd *node);
+void	ft_cmd(char *cmd);
 
-char	**g_envp;
+typedef struct s_gloval      t_gloval;
+t_gloval               g_var;
+
+struct s_gloval
+{
+   char   **envp;
+   int      exit_code;
+};
 
 struct s_token
 {
@@ -60,8 +67,8 @@ struct s_cmd
 {
 	int		type;
 	char	*cmd;
-	t_cmd	*left;
-	t_cmd	*right;
+	t_cmd	*next;
+	t_cmd	*prev;
 };
 
 struct s_cmd_list

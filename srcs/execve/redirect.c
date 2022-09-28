@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 13:44:11 by siokim            #+#    #+#             */
-/*   Updated: 2022/09/26 19:03:32 by siokim           ###   ########.fr       */
+/*   Updated: 2022/09/29 06:03:45 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,29 @@ void	redirin(t_cmd *node)
 {
 	int fdin;
 	
-	fdin = openfile(node->left->cmd, INFILE);
+	fdin = openfile(node->next->next->cmd, INFILE);
 	dup2(fdin, STDIN_FILENO);
+	ft_cmd(node->cmd);
 }
 
-void	redirout(t_cmd *node, char **envp)
+void	redirout(t_cmd *node)
 {
 	int	fdout;
 
-	fdout = openfile(node->right->cmd, OUTFILE);
+	fdout = openfile(node->next->next->cmd, OUTFILE);
 	dup2(fdout, STDOUT_FILENO);
-	ft_cmd(envp, node->left->cmd);
+	ft_cmd(node->cmd);
 }
 
 
-void	append(t_cmd *node, char **envp)
+void	append(t_cmd *node)
 {
 	int	fdout;
 
-	fdout = openfile(node->right->cmd, APPEND);
+	fdout = openfile(node->next->next->cmd, APPEND);
 	dup2(fdout, STDOUT_FILENO);
-	ft_cmd(envp, node->left->cmd);
+	ft_cmd(node->cmd);
+
 }
 
 // void	heredoc(t_cmd *node)
@@ -53,14 +55,14 @@ void	append(t_cmd *node, char **envp)
 // 	}
 // }
 
-void	ft_redirect(char **envp, t_cmd *node)
+void	ft_redirect(t_cmd *node)
 {
 	if (node->type == REDIRIN)
 		redirin(node);
 	else if (node->type == REDIROUT)
-		redirout(node, envp);	
+		redirout(node);	
 	else if (node->type == APPEND)
-		append(node, envp);
+		append(node);
 	// else
 		// heredoc(node);
 }
