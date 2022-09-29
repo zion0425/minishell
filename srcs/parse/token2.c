@@ -40,13 +40,31 @@ char	*find_value(char *key)
 	return (ret);
 }
 
+char	*dollar_qustion(char *str)
+{
+	int		idx;
+	char	*exit_code;
+	char	*tmp;
+	char	*ret;
+
+	idx = 1;
+	exit_code = ft_itoa(g_var.exit_code);
+	while (str[idx])
+		idx++;
+	tmp = ft_substr(str, 1, idx);
+	ret = ft_strjoin(exit_code, tmp);
+	free(tmp);
+	free(exit_code);
+	return (ret);
+}
+
 char	*reassembly_str(char *cur, char *tmp, int idx)
 {
 	char	*ret;
 	char	*value;
 
-	if (ft_strlen(cur) == 1 && cur[0] == '?')
-		ret = ft_itoa(g_var.exit_code);
+	if (cur[0] == '?')
+		ret = dollar_qustion(cur);
 	else
 	{
 		while (cur[++idx])
@@ -68,39 +86,25 @@ char	*reassembly_str(char *cur, char *tmp, int idx)
 	return (ret);
 }
 
-char	*dquote_dollar(char *cur, int *idx)
-{
-	int		start;
-	char	*tmp;
-	char	*ret;
-
-	start = *idx;
-	while (cur[*idx] && ft_isalnum(cur[*idx]) && !is_whitespace(cur[*idx]))
-		(*idx)++;
-	tmp = ft_strsub(cur, start, (*idx) - start);
-	if (tmp[0] != '\0');
-		ret = reassembly_str(tmp, NULL, -1);
-	else
-		
-}
-
-char	*check_dquote(char *cur)
+char	*dquote_dollar(char *cur)
 {
 	int		idx;
 	char	*ret;
+	char	*tmp;
+	char	**split;
 
 	idx = -1;
 	if (ft_strlen(cur) == 0)
 		return (cur);
 	ret = ft_strdup("");
-	while (cur[++idx])
+	split = ft_split(cur, '$');
+	while (split[++idx])
 	{
-		if (cur[idx] == '$')
-		{
-			idx++;
-			dquote_dollar(cur, &idx);
-		}
+		tmp = ret;
+		ret = ft_strjoin(ret, reassembly_str(split[idx], NULL, -1));
+		free(tmp);
 	}
+	free_split(split);
 	return (ret);
 }
 
@@ -116,7 +120,8 @@ int	envp_convert(t_token *head, int cnt)
 		if (cur->type == DOLLAR)
 			cur->token = reassembly_str(cur->token, NULL, -1);
 		if (cur->type == DQUOTE)
-			cur->token = check_dquote(cur->token);
+			cur->token = dquote_dollar(cur->token);
+		cur = cur->next;
 	}
 	return (1);
 }

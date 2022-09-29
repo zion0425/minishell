@@ -40,15 +40,14 @@ int	check_token(t_token *head_token, t_cmd_list *cmd_list)
 	return (ret);
 }
 
-/*int	create_parse_tree(t_cmd_list *cmd_list, t_token *head_token)
+int	create_parse_tree(t_cmd_list *cmd_list, t_token *head_token)
 {
 	int		token_cnt;
 
 	token_cnt = check_token(head_token, cmd_list);
-	//envp_convert(head_token, token_cnt);
-	//dquote_dollar_to_word(head_token, NULL);
+	envp_convert(head_token, token_cnt);
 	return (1);
-}*/
+}
 
 int	create_token_list(char *line, t_token **head_token)
 {
@@ -76,7 +75,7 @@ int	parse(t_cmd_list *cmd_list)
 
 	(void)cmd_list;
 	prompt(&line);
-	if (is_empty(line, -1))
+	if (is_empty(line))
 	{
 		if (line)
 			free(line);
@@ -90,7 +89,7 @@ int	parse(t_cmd_list *cmd_list)
 			free(line);
 		return (0);
 	}
-	//create_parse_tree(cmd_list, head_token);
+	create_parse_tree(cmd_list, head_token);
 	show_token_list(head_token);
 	free_token_list(head_token);
 	add_history(line);

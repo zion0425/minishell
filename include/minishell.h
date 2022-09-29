@@ -70,6 +70,7 @@ int		parse(t_cmd_list *cmd_list);
 int		is_empty(char *line);
 int		get_token_type(char *line, int idx);
 int		new_token(t_token **head_token, char *line, int *idx);
+int		envp_convert(t_token *head, int cnt);
 char	*dollar_token_handle(char *line, int *idx, t_token *token);
 void	free_token_list(t_token *head_token);
 
