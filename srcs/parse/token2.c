@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:16:32 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/27 14:40:20 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/30 14:03:12 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*find_value(char *key)
 	return (ret);
 }
 
-char	*dollar_qustion(char *str)
+char	*dollar_question(char *str)
 {
 	int		idx;
 	char	*exit_code;
@@ -64,7 +64,7 @@ char	*reassembly_str(char *cur, char *tmp, int idx)
 	char	*value;
 
 	if (cur[0] == '?')
-		ret = dollar_qustion(cur);
+		ret = dollar_question(cur);
 	else
 	{
 		while (cur[++idx])
@@ -86,31 +86,39 @@ char	*reassembly_str(char *cur, char *tmp, int idx)
 	return (ret);
 }
 
-char	*dquote_dollar(char *cur)
+char	*dquote_dollar(char *cur, char *ret, char *join, int idx)
 {
-	int		idx;
-	char	*ret;
+	int		start;
 	char	*tmp;
-	char	**split;
 
-	idx = -1;
-	if (ft_strlen(cur) == 0)
-		return (cur);
-	ret = ft_strdup("");
-	split = ft_split(cur, '$');
-	while (split[++idx])
+	while (cur[idx])
 	{
+		if (cur[idx] == '$')
+		{
+			start = idx + 1;
+			while (cur[++idx] && ft_isalnum(cur[idx]))
+				;
+			join = reassembly_str(ft_substr(cur, start, idx - start), NULL, -1);
+		}
+		else
+		{
+			start = idx;
+			while (cur[idx] && cur[idx] != '$')
+				idx++;
+			join = ft_substr(cur, start, idx - start);
+		}
 		tmp = ret;
-		ret = ft_strjoin(ret, reassembly_str(split[idx], NULL, -1));
+		ret = ft_strjoin(ret, join);
 		free(tmp);
+		free(join);
 	}
-	free_split(split);
 	return (ret);
 }
 
 int	envp_convert(t_token *head, int cnt)
 {
 	int		idx;
+	char	*tmp;
 	t_token	*cur;
 
 	idx = -1;
@@ -120,7 +128,13 @@ int	envp_convert(t_token *head, int cnt)
 		if (cur->type == DOLLAR)
 			cur->token = reassembly_str(cur->token, NULL, -1);
 		if (cur->type == DQUOTE)
-			cur->token = dquote_dollar(cur->token);
+		{
+			tmp = cur->token;
+			cur->token = dquote_dollar(cur->token, ft_strdup(""), NULL, 0);
+			free(tmp);
+		}
+		if (cur->token == NULL)
+			return (0);
 		cur = cur->next;
 	}
 	return (1);

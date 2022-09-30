@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 13:41:15 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/27 05:24:24 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/30 14:20:40 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	prompt(char **line)
 	}
 }
 
-int	check_token(t_token *head_token, t_cmd_list *cmd_list)
+static int	check_token(t_token *head_token, t_cmd_list *cmd_list)
 {
 	int		ret;
 	t_token	*cur;
@@ -30,7 +30,7 @@ int	check_token(t_token *head_token, t_cmd_list *cmd_list)
 	ret = 0;
 	cur = head_token;
 	cmd_list->size = 1;
-	while (cur->next)
+	while (cur)
 	{
 		if (cur->type == PIPE)
 			cmd_list->size++;
@@ -40,16 +40,17 @@ int	check_token(t_token *head_token, t_cmd_list *cmd_list)
 	return (ret);
 }
 
-int	create_parse_tree(t_cmd_list *cmd_list, t_token *head_token)
+static int	create_cmd_list(t_cmd_list *cmd_list, t_token *head_token)
 {
 	int		token_cnt;
 
 	token_cnt = check_token(head_token, cmd_list);
-	envp_convert(head_token, token_cnt);
+	if (!envp_convert(head_token, token_cnt))
+		return (0);
 	return (1);
 }
 
-int	create_token_list(char *line, t_token **head_token)
+static int	create_token_list(char *line, t_token **head_token)
 {
 	int	idx;
 
@@ -84,15 +85,16 @@ int	parse(t_cmd_list *cmd_list)
 	head_token = NULL;
 	if (!create_token_list(line, &head_token))
 	{
-		free_token_list(head_token);
-		if (line)
-			free(line);
+		free_token_list(head_token, line);
 		return (0);
 	}
-	create_parse_tree(cmd_list, head_token);
-	show_token_list(head_token);
-	free_token_list(head_token);
+	if (!create_cmd_list(cmd_list, head_token))
+	{
+		free_token_list(head_token, line);
+		return (0);
+	}
 	add_history(line);
-	free(line);
+	show_token_list(head_token);
+	free_token_list(head_token, line);
 	return (1);
 }

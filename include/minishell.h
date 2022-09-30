@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/27 05:34:46 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/09/30 14:09:58 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ struct s_token
 struct s_cmd
 {
 	int		type;
-	char	*cmd;
+	char	**cmd;
 	t_cmd	*next;
 	t_cmd	*prev;
 };
@@ -72,7 +72,7 @@ int		get_token_type(char *line, int idx);
 int		new_token(t_token **head_token, char *line, int *idx);
 int		envp_convert(t_token *head, int cnt);
 char	*dollar_token_handle(char *line, int *idx, t_token *token);
-void	free_token_list(t_token *head_token);
+void	free_token_list(t_token *head_token, char *line);
 
 t_token	*serach_token(t_token *head, int type);
 
