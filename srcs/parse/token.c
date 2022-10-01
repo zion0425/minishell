@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:09:42 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/17 13:28:11 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/01 18:36:47 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,10 @@ static char	*word_token_handle(char *line, int *idx)
 	char	*ret;
 
 	start = *idx;
-	while (line[*idx] && !(line[*idx] == ' ' || \
-		(line[*idx] >= 9 && line[*idx] <= 13)))
+	while (line[*idx] && !is_whitespace(line[*idx]))
 	{
 		if (get_token_type(line, *idx) != WORD)
-			break;
+			break ;
 		(*idx)++;
 	}
 	ret = ft_substr(line, start, *idx - start);
@@ -96,7 +95,7 @@ static void	input_token(t_token *new_token, char *line, int *idx)
 	else if (new_token->type == PIPE)
 		new_token->token = ft_strdup("|");
 	else if (new_token->type == DOLLAR)
-		new_token->token = ft_strdup("$");
+		new_token->token = dollar_token_handle(line, idx, new_token);
 	else if (new_token->type == QUOTE || new_token->type == DQUOTE)
 		new_token->token = quote_token_handle(line, idx);
 	else if (new_token->type == WORD)
@@ -107,7 +106,7 @@ int	new_token(t_token **head_token, char *line, int *idx)
 {
 	t_token	*new_token;
 
-	new_token = (t_token *)ft_calloc(sizeof(t_token), 1);
+	new_token = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!new_token)
 		return (0);
 	new_token->type = get_token_type(line, *idx);

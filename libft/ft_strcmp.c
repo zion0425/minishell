@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/11 16:37:19 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/01 21:05:05 by yjoo             ###   ########.fr       */
+/*   Created: 2022/10/01 16:40:59 by yjoo              #+#    #+#             */
+/*   Updated: 2022/10/01 16:41:18 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-
-static void	signal_handler(int signo)
+int	ft_strcmp(char *s1, char *s2)
 {
-	if (signo == SIGINT)
-	{
-		g_var.exit_code = 130;
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-}
+	int	i;
 
-void	signal_setting(void)
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, signal_handler);
+	i = 0;
+	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

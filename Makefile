@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
+#    By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/10 14:08:26 by yjoo              #+#    #+#              #
-#    Updated: 2022/09/22 16:19:30 by siokim           ###   ########.fr        #
+#    Updated: 2022/10/01 21:03:32 by yjoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,20 @@ RM = rm -f
 NAME = minishell
 FSANI = -g3 -fsanitize=address
 
+OS = $(shell uname -s)
+
+ifeq ($(OS), Darwin)
+	RLINC = -lreadline -L${HOME}/.brew/opt/readline/lib
+	RLLIB = -I${HOME}/.brew/opt/readline/include
+else
+	RLINC = -lreadline
+endif
+
 INCLUDE = -I./include
-RLINC = -lreadline -L${HOME}/.brew/opt/readline/lib
 SRCS_DIR = ./srcs
-SRCS_FILES = main.c signal.c execve.c
+SRCS_FILES = main.c signal.c utils.c
 PARSE_DIR = ./srcs/parse
-PARSE_FILES = parse.c parse_utils.c	token.c
+PARSE_FILES = parse.c parse_utils.c token.c token2.c cmd.c
 EXECVE_FILES = execve.c redirect.c fileIO.c
 EXECVE_DIR = ./srcs/execve
 
@@ -32,13 +40,13 @@ SRCS = $(addprefix $(addsuffix /, $(SRCS_DIR)), $(SRCS_FILES))\
 OBJS = $(SRCS:.c=.o)
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -I${HOME}/.brew/opt/readline/include -c $< -o $@
+	@$(CC) $(CFLAGS) $(RLLIB) -c $< -o $@
 
 all : $(NAME)
 
 $(NAME) : $(OBJS)
 		@make -C ./libft/
-		@$(CC) $(INCLUDE) $(RLINC) $^ ./libft/libft.a -o $@
+		@$(CC) $(FSANI) $(INCLUDE) $^ $(RLINC) ./libft/libft.a -o $@
 		@echo "\033[32m"minishell_complete"\033[0m"
 
 re : fclean all
