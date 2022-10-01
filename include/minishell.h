@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/09/22 16:13:21 by siokim           ###   ########.fr       */
-=======
-/*   Updated: 2022/10/01 20:10:03 by yjoo             ###   ########.fr       */
->>>>>>> yjoo
+/*   Updated: 2022/10/01 21:13:00 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +14,10 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-<<<<<<< HEAD
-# include <stdio.h>
-=======
 # include <termios.h>
->>>>>>> yjoo
 # include <signal.h>
 # include <sys/stat.h>
 # include <errno.h>
@@ -100,7 +93,7 @@ char	**get_envp(char **envp);
 int		is_whitespace(char c);
 void	signal_setting(void);
 
-void	show_token_list(t_token *head_token);//삭제예정
+void	show_token_list(t_token *head_token);
 void	show_cmd(t_cmd **head_cmd);
 
 #endif
