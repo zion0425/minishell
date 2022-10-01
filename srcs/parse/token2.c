@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:16:32 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/30 14:03:12 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/01 17:21:09 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,26 @@ void	show_token_list(t_token *head_token)
 		if (!cur_token->next)
 			break ;
 		cur_token = cur_token->next;
+		i++;
+	}
+}
+
+//삭제예정
+void	show_cmd(t_cmd **head_cmd)
+{
+	t_cmd	*cur_cmd;
+	int		i;
+
+	cur_cmd = *head_cmd;
+	i = 1;
+	if (!*head_cmd)
+		return ;
+	while (1)
+	{
+		printf("cur[%d]cmd : %s, type : %d\n", i, cur_cmd->cmd, cur_cmd->type);
+		if (!cur_cmd->next)
+			break ;
+		cur_cmd = cur_cmd->next;
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/30 14:09:58 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/01 20:10:03 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <termios.h>
 # include <signal.h>
 
 # define WORD		0
@@ -47,15 +48,14 @@ struct s_token
 struct s_cmd
 {
 	int		type;
-	char	**cmd;
+	char	*cmd;
 	t_cmd	*next;
 	t_cmd	*prev;
 };
 
 struct s_cmd_list
 {
-	t_cmd	*head;
-	t_cmd	*tail;
+	t_cmd	**head;
 	int		size;
 };
 
@@ -74,7 +74,8 @@ int		envp_convert(t_token *head, int cnt);
 char	*dollar_token_handle(char *line, int *idx, t_token *token);
 void	free_token_list(t_token *head_token, char *line);
 
-t_token	*serach_token(t_token *head, int type);
+int		new_cmd_list(t_cmd **head_cmd, t_token *head_token);
+t_token	*search_token(t_token *head, int type);
 
 void	free_split(char **split);
 
@@ -83,5 +84,6 @@ int		is_whitespace(char c);
 void	signal_setting(void);
 
 void	show_token_list(t_token *head_token);//삭제예정
+void	show_cmd(t_cmd **head_cmd);
 
 #endif

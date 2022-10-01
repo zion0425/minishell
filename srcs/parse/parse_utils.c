@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 20:20:41 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/30 14:00:05 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/01 18:54:21 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*dollar_token_handle(char *line, int *idx, t_token *new)
 	}
 	if (start == *idx)
 	{
-		ret = ft_strdup("$");
+		ret = ft_strdup("");
 		new->type = WORD;
 	}
 	else
@@ -51,7 +51,7 @@ int	is_empty(char *line)
 	return (1);
 }
 
-t_token	*serach_token(t_token *head, int type)
+t_token	*search_token(t_token *head, int type)
 {
 	t_token	*ret;
 
@@ -62,7 +62,6 @@ t_token	*serach_token(t_token *head, int type)
 			return (ret);
 		ret = ret->next;
 	}
-	ret = head;
 	return (ret);
 }
 

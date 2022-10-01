@@ -6,7 +6,7 @@
 #    By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/10 14:08:26 by yjoo              #+#    #+#              #
-#    Updated: 2022/09/26 08:48:08 by yjoo             ###   ########.fr        #
+#    Updated: 2022/09/30 17:30:30 by yjoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ INCLUDE = -I./include
 SRCS_DIR = ./srcs
 SRCS_FILES = main.c signal.c utils.c
 PARSE_DIR = ./srcs/parse
-PARSE_FILES = parse.c parse_utils.c token.c token2.c #syntax.c
+PARSE_FILES = parse.c parse_utils.c token.c token2.c cmd.c
 SRCS = $(addprefix $(addsuffix /, $(SRCS_DIR)), $(SRCS_FILES))\
 		$(addprefix $(addsuffix /, $(PARSE_DIR)), $(PARSE_FILES))
 OBJS = $(SRCS:.c=.o)

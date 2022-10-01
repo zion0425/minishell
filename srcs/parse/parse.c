@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 13:41:15 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/30 14:20:40 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/01 20:52:02 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,25 @@ static int	check_token(t_token *head_token, t_cmd_list *cmd_list)
 static int	create_cmd_list(t_cmd_list *cmd_list, t_token *head_token)
 {
 	int		token_cnt;
+	int		idx;
+	t_token	*cur_token;
 
 	token_cnt = check_token(head_token, cmd_list);
+	idx = 0;
 	if (!envp_convert(head_token, token_cnt))
 		return (0);
+	cmd_list->head = (t_cmd **)ft_calloc(cmd_list->size, sizeof(t_cmd *));
+	if (!cmd_list->head)
+		return (0);
+	cur_token = head_token;
+	while (idx < cmd_list->size)
+	{
+		if (!new_cmd_list(&cmd_list->head[idx], cur_token))
+			return (0);
+		cur_token = search_token(cur_token, PIPE)->next;
+		show_cmd(&cmd_list->head[idx]);
+		idx++;
+	}
 	return (1);
 }
 
@@ -82,6 +97,7 @@ int	parse(t_cmd_list *cmd_list)
 			free(line);
 		return (0);
 	}
+	add_history(line);
 	head_token = NULL;
 	if (!create_token_list(line, &head_token))
 	{
@@ -93,8 +109,6 @@ int	parse(t_cmd_list *cmd_list)
 		free_token_list(head_token, line);
 		return (0);
 	}
-	add_history(line);
-	show_token_list(head_token);
 	free_token_list(head_token, line);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:09:42 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/30 11:53:21 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/01 18:36:47 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	new_token(t_token **head_token, char *line, int *idx)
 {
 	t_token	*new_token;
 
-	new_token = (t_token *)ft_calloc(sizeof(t_token), 1);
+	new_token = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!new_token)
 		return (0);
 	new_token->type = get_token_type(line, *idx);
