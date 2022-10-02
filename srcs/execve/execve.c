@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:14:23 by siokim            #+#    #+#             */
-/*   Updated: 2022/10/02 17:36:43 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/02 22:00:54 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,10 @@ void	ft_cmd(char *cmd)
 		exit(127);
 	}
 	waitpid(pid, 0, 0);
-}
 
-void	ft_pipe(t_cmd *node)
+}
+void	recursive_exec(t_cmd_list *cmd_list, int size);
+void	ft_pipe(t_cmd_list *cmd_list, int size)
 {
 	int	pid;
 	int	pipefd[2];
@@ -71,23 +72,58 @@ void	ft_pipe(t_cmd *node)
 	{
 		close(pipefd[0]);
 		dup2(pipefd[1], STDOUT_FILENO);
-
+		recursive_exec(cmd_list, size);
+		exit(0);
 	}
 	else if (pid > 0)
 	{
 		close(pipefd[1]);
 		dup2(pipefd[0], STDIN_FILENO);
 		waitpid(pid, 0, 0);
-
 	}
 	else
 		print_error("fork_error\n");
 }
 
-void	ft_execve(t_cmd_list *cmds)
+void	recursive_exec(t_cmd_list *cmd_list, int size)
 {
 	t_cmd	*node;
+	char	*tmp_cmd;
 
+	if (--size > 0)
+		ft_pipe(cmd_list, size);
+	node = cmd_list->head[size];
+	while (node)
+	{
+		if (node->next != 0)
+		{
+			if (node->next->type >= REDIRIN && node->next->type <= HEREDOC)
+			{
+				ft_redirect(node);
+				node = node->next->next;
+			}
+			else if (node->next->type == WORD)
+			{
+				tmp_cmd = node->cmd;
+				while (node->next != 0 && node->type == WORD)
+				{
+					tmp_cmd =  ft_strjoin(tmp_cmd, ft_strjoin(" ",node->next->cmd));
+					node = node->next;
+				}
+				ft_cmd(tmp_cmd);
+				free(tmp_cmd);
+			}
+		}
+		else
+			ft_cmd(node->cmd);
+		node = node->next;
+	}
+}
 
+void	ft_execve(t_cmd_list *cmd_list)
+{	
+	int	size;
 
+	size = cmd_list->size;
+	recursive_exec(cmd_list, size);
 }

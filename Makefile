@@ -6,7 +6,7 @@
 #    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/10 14:08:26 by yjoo              #+#    #+#              #
-#    Updated: 2022/10/02 17:41:52 by siokim           ###   ########.fr        #
+#    Updated: 2022/10/02 20:31:23 by siokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 RM = rm -f
 NAME = minishell
-FSANI = -g3 -fsanitize=address
+FSANI = #-g3 -fsanitize=address
 
 OS = $(shell uname -s)
 

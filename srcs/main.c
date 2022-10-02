@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 14:15:39 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/02 17:41:55 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/02 21:51:56 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ void	echoctl(int option)
 int	main(int argc, char **argv, char **envp)
 {
 	t_cmd_list	cmd_list;
-
+	int	cnt;
+	
+	cnt = -1;
 	(void)argc;
 	(void)argv;
 	g_var.envp = get_envp(envp);
@@ -65,6 +67,7 @@ int	main(int argc, char **argv, char **envp)
 			g_var.exit_code = 1;
 			printf("Error\n");
 		}
+		ft_execve(&cmd_list);
 		free_cmd_list(&cmd_list);
 	}
 	return (0);
