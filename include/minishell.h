@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/03 00:27:26 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/03 03:47:05 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	signal_setting(void);
 void	echoctl(int option);
 
 void	env(void);
+void	echo(t_cmd *head_cmd);
 
 void	show_token_list(t_token *head_token);
 void	show_cmd(t_cmd **head_cmd);

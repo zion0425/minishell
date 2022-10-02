@@ -6,24 +6,59 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 17:30:12 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/02 20:15:35 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/03 04:15:43 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+static int	is_vaild_cmd(t_cmd **head_cmd)
+{
+	t_cmd	*cur_cmd;
+
+	cur_cmd = *head_cmd;
+	while (cur_cmd)
+	{
+		if (cur_cmd->type >= REDIRIN && cur_cmd->type <= APPEND)
+		{
+			if (cur_cmd->next == NULL || \
+			(cur_cmd->next->type >= REDIRIN && cur_cmd->next->type <= APPEND))
+			{
+				printf("syntax error near unexpected token\n");
+				return (0);
+			}
+		}
+		cur_cmd = cur_cmd->next;
+	}
+	return (1);
+}
+
 static int	get_cmd_type(t_token *token, char *cmd)
 {
+	int		idx;
+	char	*tmp;
+
+	idx = 0;
+	tmp = ft_strdup(cmd);
+	while (tmp[idx])
+	{
+		tmp[idx] = ft_tolower(tmp[idx]);
+		idx++;
+	}
 	if (token->prev == NULL || token->prev->type == PIPE)
 	{
-		if (ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "cd") == 0 || \
-		ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "export") == 0 || \
-		ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "env") == 0 || \
-		ft_strcmp(cmd, "exit") == 0)
+		if (ft_strcmp(tmp, "echo") == 0 || ft_strcmp(tmp, "cd") == 0 || \
+		ft_strcmp(tmp, "pwd") == 0 || ft_strcmp(tmp, "export") == 0 || \
+		ft_strcmp(tmp, "unset") == 0 || ft_strcmp(tmp, "env") == 0 || \
+		ft_strcmp(tmp, "exit") == 0)
+		{
+			free(tmp);
 			return (BUILTIN);
+		}
 	}
 	if (token->type == DQUOTE || token->type == QUOTE)
 		return (WORD);
+	free(tmp);
 	return (token->type);
 }
 
@@ -65,5 +100,7 @@ int	new_cmd_list(t_cmd **head_cmd, t_token *head_token)
 			return (0);
 		cur_token = cur_token->next;
 	}
+	if (!is_vaild_cmd(head_cmd))
+		return (0);
 	return (1);
 }

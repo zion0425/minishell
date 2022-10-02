@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
+#    By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/10 14:08:26 by yjoo              #+#    #+#              #
-#    Updated: 2022/10/02 17:41:52 by siokim           ###   ########.fr        #
+#    Updated: 2022/10/03 03:43:29 by yjoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ PARSE_FILES = parse.c parse_utils.c token.c token2.c cmd.c
 EXECVE_FILES = execve.c redirect.c fileIO.c
 EXECVE_DIR = ./srcs/execve
 BUILTIN_DIR = ./srcs/builtin
-BUILTIN_FILES = env.c
+BUILTIN_FILES = env.c echo.c
 
 
 SRCS = $(addprefix $(addsuffix /, $(SRCS_DIR)), $(SRCS_FILES))\
