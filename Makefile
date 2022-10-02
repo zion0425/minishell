@@ -6,11 +6,7 @@
 #    By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/10 14:08:26 by yjoo              #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2022/10/01 21:03:32 by yjoo             ###   ########.fr        #
-=======
-#    Updated: 2022/10/01 21:36:08 by yjoo             ###   ########.fr        #
->>>>>>> yjoo
+#    Updated: 2022/10/02 17:06:15 by yjoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,21 +30,15 @@ SRCS_DIR = ./srcs
 SRCS_FILES = main.c signal.c utils.c
 PARSE_DIR = ./srcs/parse
 PARSE_FILES = parse.c parse_utils.c token.c token2.c cmd.c
-<<<<<<< HEAD
 EXECVE_FILES = execve.c redirect.c fileIO.c
 EXECVE_DIR = ./srcs/execve
-
-SRCS = $(addprefix $(addsuffix /, $(SRCS_DIR)), $(SRCS_FILES))\
-		$(addprefix $(addsuffix /, $(PARSE_DIR)), $(PARSE_FILES))\
-		$(addprefix $(addsuffix /, $(EXECVE_DIR)), $(EXECVE_FILES))
-
-=======
 BUILTIN_DIR = ./srcs/builtin
 BUILTIN_FILES = env.c
+
 SRCS = $(addprefix $(addsuffix /, $(SRCS_DIR)), $(SRCS_FILES))\
 		$(addprefix $(addsuffix /, $(PARSE_DIR)), $(PARSE_FILES))\
-		$(addprefix $(addsuffix /, $(BUILTIN_DIR)), $(BUILTIN_FILES))
->>>>>>> yjoo
+		$(addprefix $(addsuffix /, $(BUILTIN_DIR)), $(BUILTIN_FILES))\
+		$(addprefix $(addsuffix /, $(EXECVE_DIR)), $(EXECVE_FILES))
 OBJS = $(SRCS:.c=.o)
 
 %.o: %.c

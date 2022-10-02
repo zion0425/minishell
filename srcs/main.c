@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 14:15:39 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/02 17:00:19 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/02 17:02:42 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	free_cmd_list(t_cmd_list *cmd_list)
 		idx++;
 	}
 	free(cmd_list->head);
-	ft_memset(cmd_list, 0, sizeof(t_cmd_list));
+	ft_bzero(cmd_list, sizeof(t_cmd_list));
 }
 
 void	echoctl(int option)
