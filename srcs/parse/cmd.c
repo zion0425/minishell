@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 17:30:12 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/01 20:30:30 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/02 20:15:35 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static int	get_cmd_type(t_token *token, char *cmd)
 		ft_strcmp(cmd, "exit") == 0)
 			return (BUILTIN);
 	}
+	if (token->type == DQUOTE || token->type == QUOTE)
+		return (WORD);
 	return (token->type);
 }
 

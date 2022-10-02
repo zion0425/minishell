@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/01 21:49:05 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/02 17:55:34 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ struct s_gloval
 	char	**envp;
 	int		exit_code;
 };
-
 
 int		parse(t_cmd_list *cmd_list);
 int		is_empty(char *line);

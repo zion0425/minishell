@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:09:42 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/01 18:36:47 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/02 20:10:12 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static char	*quote_token_handle(char *line, int *idx)
 		ret = ft_substr(line, start, *idx - start);
 		return (ret);
 	}
+	printf("[ %c ] must be paired\n", quote_type);
 	return (NULL);
 }
 
