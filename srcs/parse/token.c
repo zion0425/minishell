@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:09:42 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/02 20:10:12 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/02 23:31:00 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	*quote_token_handle(char *line, int *idx)
 	return (NULL);
 }
 
-static void	input_token(t_token *new_token, char *line, int *idx)
+void	input_token(t_token *new_token, char *line, int *idx)
 {
 	if (new_token->type == HEREDOC || new_token->type == APPEND)
 	{
@@ -116,6 +116,11 @@ int	new_token(t_token **head_token, char *line, int *idx)
 	{
 		free(new_token);
 		return (0);
+	}
+	if (new_token->type == DQUOTE || new_token->type == QUOTE)
+	{
+		if (!is_whitespace(line[*idx + 1]))
+			merge_token(line, idx, new_token);
 	}
 	return (add_token_list(head_token, &new_token));
 }

@@ -6,27 +6,28 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:16:32 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/02 20:46:21 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/03 00:27:44 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	*find_value(char *key)
+char	*find_value(char *key, char *ret, int idx, int jdx)
 {
-	int		idx;
-	char	*ret;
 	char	**split;
 
-	idx = -1;
 	while (g_var.envp[++idx])
 	{
 		if (ft_strncmp(g_var.envp[idx], key, ft_strlen(key)) == 0)
 		{
 			split = ft_split(g_var.envp[idx], '=');
-			if (ft_strlen(split[0]) == ft_strlen(key))
+			if (ft_strcmp(split[0], key) == 0)
 			{
-				ret = ft_strdup(split[1]);
+				jdx = ft_strlen(key) + 1;
+				while (g_var.envp[idx][jdx])
+					jdx++;
+				ret = ft_substr(g_var.envp[idx], ft_strlen(key) + 1, \
+				jdx - (ft_strlen(key) + 1));
 				free(key);
 				free_split(split);
 				return (ret);
@@ -35,8 +36,8 @@ char	*find_value(char *key)
 				free_split(split);
 		}
 	}
-	free(key);
 	ret = ft_strdup("");
+	free(key);
 	return (ret);
 }
 
@@ -77,7 +78,7 @@ char	*reassembly_str(char *cur, char *tmp, int idx)
 		}
 		if (!tmp && cur[idx] == '\0')
 			tmp = ft_strdup("");
-		value = find_value(ft_substr(cur, 0, idx));
+		value = find_value(ft_substr(cur, 0, idx), NULL, -1, 0);
 		ret = ft_strjoin(value, tmp);
 		free(tmp);
 		free(value);

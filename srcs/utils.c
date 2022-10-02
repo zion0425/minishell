@@ -47,3 +47,16 @@ void	free_split(char **split)
 	}
 	free(split);
 }
+
+int	is_empty(char *line)
+{
+	int	idx;
+
+	idx = -1;
+	while (line[++idx])
+	{
+		if (line[idx] != ' ' && !(line[idx] >= 9 && line[idx] <= 13))
+			return (0);
+	}
+	return (1);
+}

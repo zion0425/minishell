@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/02 20:46:05 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/03 00:27:26 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int		new_token(t_token **head_token, char *line, int *idx);
 int		envp_convert(t_token *head, int cnt);
 char	*dollar_token_handle(char *line, int *idx, t_token *token);
 void	free_token_list(t_token *head_token, char *line);
+void	input_token(t_token *new_token, char *line, int *idx);
+void	merge_token(char *line, int *idx, t_token *new_token);
 
 int		new_cmd_list(t_cmd **head_cmd, t_token *head_token);
 t_token	*search_token(t_token *head, int type);

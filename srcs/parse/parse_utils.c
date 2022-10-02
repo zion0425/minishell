@@ -6,11 +6,26 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 20:20:41 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/01 18:54:21 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/02 23:30:31 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	merge_token(char *line, int *idx, t_token *new_token)
+{
+	char	*tmp;
+	t_token	*join_token;
+
+	(*idx)++;
+	join_token = (t_token *)ft_calloc(1, sizeof(t_token));
+	input_token(join_token, line, idx);
+	tmp = new_token->token;
+	new_token->token = ft_strjoin(new_token->token, join_token->token);
+	free(join_token->token);
+	free(join_token);
+	free(tmp);
+}
 
 char	*dollar_token_handle(char *line, int *idx, t_token *new)
 {
@@ -36,19 +51,6 @@ char	*dollar_token_handle(char *line, int *idx, t_token *new)
 		return (NULL);
 	(*idx)--;
 	return (ret);
-}
-
-int	is_empty(char *line)
-{
-	int	idx;
-
-	idx = -1;
-	while (line[++idx])
-	{
-		if (line[idx] != ' ' && !(line[idx] >= 9 && line[idx] <= 13))
-			return (0);
-	}
-	return (1);
 }
 
 t_token	*search_token(t_token *head, int type)
