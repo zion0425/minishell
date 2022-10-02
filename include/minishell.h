@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/03 04:24:18 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/03 06:50:12 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ char	*dollar_token_handle(char *line, int *idx, t_token *token);
 void	free_token_list(t_token *head_token, char *line);
 void	input_token(t_token *new_token, char *line, int *idx);
 void	merge_token(char *line, int *idx, t_token *new_token);
+char	*find_value(char *key, char *ret, int idx, int jdx);
 
 int		new_cmd_list(t_cmd **head_cmd, t_token *head_token);
 t_token	*search_token(t_token *head, int type);
@@ -102,6 +103,9 @@ void	echoctl(int option);
 
 void	env(void);
 void	echo(t_cmd *head_cmd);
+void	ft_exit(t_cmd *cmd, int size);
+void	pwd(void);
+void	cd(t_cmd *cmd);
 
 void	show_token_list(t_token *head_token);
 void	show_cmd(t_cmd **head_cmd);
