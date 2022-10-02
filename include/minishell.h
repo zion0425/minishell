@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/01 21:13:00 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/02 17:00:25 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,9 @@ void	free_split(char **split);
 char	**get_envp(char **envp);
 int		is_whitespace(char c);
 void	signal_setting(void);
+void	echoctl(int option);
+
+void	env(void);
 
 void	show_token_list(t_token *head_token);
 void	show_cmd(t_cmd **head_cmd);

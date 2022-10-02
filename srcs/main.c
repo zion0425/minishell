@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 14:15:39 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/01 21:04:53 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/02 17:00:19 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	free_cmd_list(t_cmd_list *cmd_list)
 	ft_memset(cmd_list, 0, sizeof(t_cmd_list));
 }
 
-static void	echoctl(int option)
+void	echoctl(int option)
 {
 	struct termios	attr;
 
