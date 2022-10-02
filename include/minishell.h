@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/09/29 05:09:08 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/02 17:37:22 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdio.h>
+# include <string.h>
 # include <signal.h>
 # include <sys/stat.h>
 # include <errno.h>
 # include <fcntl.h>
-# include <string.h>
 
 # define INFILE		0
 # define OUTFILE	1

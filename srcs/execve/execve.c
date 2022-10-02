@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:14:23 by siokim            #+#    #+#             */
-/*   Updated: 2022/09/29 06:41:12 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/02 17:36:43 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,6 @@ void	ft_execve(t_cmd_list *cmds)
 {
 	t_cmd	*node;
 
-	node = cmds->head;
-	while (node && node->type != PIPE)
-	{
 
-		if (node->type == WORD)
-			if (node->next->type >= REDIRIN && node->next->type <= APPEND)
-				ft_redirect(node);
-		node = node->next;
-		if (cmds->size != 0)
-			ft_pipe(node);
-	}
 
 }
