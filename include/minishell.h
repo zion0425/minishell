@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/02 20:44:44 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/02 20:46:05 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <termios.h>
+# include <string.h>
 # include <signal.h>
 # include <sys/stat.h>
 # include <errno.h>
 # include <fcntl.h>
-# include <string.h>
 
 # define INFILE		0
 # define OUTFILE	1
@@ -44,8 +44,16 @@ typedef struct s_gloval		t_gloval;
 t_gloval					g_var;
 
 void	print_error(char *err_msg);
-void	ft_cmd(char **envp, char *cmd);
+void	ft_execve(t_cmd_list *cmds);
 int		openfile(char *filename, char format);
+void	ft_redirect(t_cmd *node);
+void	ft_cmd(char *cmd);
+
+struct s_gloval
+{
+	char	**envp;
+	int		exit_code;
+};
 
 struct s_token
 {
@@ -67,12 +75,6 @@ struct s_cmd_list
 {
 	t_cmd	**head;
 	int		size;
-};
-
-struct s_gloval
-{
-	char	**envp;
-	int		exit_code;
 };
 
 int		parse(t_cmd_list *cmd_list);

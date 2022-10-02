@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/10 14:08:26 by yjoo              #+#    #+#              #
-#    Updated: 2022/10/02 17:06:15 by yjoo             ###   ########.fr        #
+#    Updated: 2022/10/02 17:41:52 by siokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ EXECVE_FILES = execve.c redirect.c fileIO.c
 EXECVE_DIR = ./srcs/execve
 BUILTIN_DIR = ./srcs/builtin
 BUILTIN_FILES = env.c
+
 
 SRCS = $(addprefix $(addsuffix /, $(SRCS_DIR)), $(SRCS_FILES))\
 		$(addprefix $(addsuffix /, $(PARSE_DIR)), $(PARSE_FILES))\
