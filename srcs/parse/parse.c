@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 13:41:15 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/01 20:52:02 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/02 20:42:16 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,14 @@ static int	check_token(t_token *head_token, t_cmd_list *cmd_list)
 	while (cur)
 	{
 		if (cur->type == PIPE)
+		{
 			cmd_list->size++;
+			if (cur->next == NULL)
+			{
+				printf("invaild pipe\n");
+				return (0);
+			}
+		}
 		ret++;
 		cur = cur->next;
 	}
@@ -47,6 +54,9 @@ static int	create_cmd_list(t_cmd_list *cmd_list, t_token *head_token)
 	t_token	*cur_token;
 
 	token_cnt = check_token(head_token, cmd_list);
+	if (token_cnt == 0)
+		return (0);
+
 	idx = 0;
 	if (!envp_convert(head_token, token_cnt))
 		return (0);

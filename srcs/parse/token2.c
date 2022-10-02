@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:16:32 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/01 17:21:09 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/02 18:05:10 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*reassembly_str(char *cur, char *tmp, int idx)
 	{
 		while (cur[++idx])
 		{
-			if (!ft_isalnum(cur[idx]))
+			if (!ft_isalnum(cur[idx]) || (ft_isdigit(cur[0]) && idx == 1))
 			{
 				tmp = ft_substr(cur, idx, ft_strlen(cur) - idx);
 				break ;
