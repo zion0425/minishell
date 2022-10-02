@@ -1,0 +1,14 @@
+{
+	"makefile.launchConfigurations": [
+		{
+			"cwd": "/goinfre/siokim/minishell",
+			"binaryPath": "/goinfre/siokim/minishell/minishell",
+			"binaryArgs": []
+		}
+	],
+	"files.associations": {
+		"minishell.h": "c",
+		"stdio.h": "c",
+		"string.h": "c"
+	}
+}
