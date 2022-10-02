@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 13:41:15 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/02 23:30:12 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/03 04:30:23 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ static int	create_cmd_list(t_cmd_list *cmd_list, t_token *head_token)
 		if (!new_cmd_list(&cmd_list->head[idx], cur_token))
 			return (0);
 		cur_token = search_token(cur_token, PIPE)->next;
-		show_cmd(&cmd_list->head[idx]);
+		// debug
+		// printf("----------cmd_list->head[%d]--------\n", idx);
+		// show_cmd(&cmd_list->head[idx]);
 		idx++;
 	}
 	return (1);
@@ -85,7 +87,7 @@ static int	create_token_list(char *line, t_token **head_token)
 		(line[idx] >= 9 && line[idx] <= 13)))
 			idx++;
 		if (!line[idx])
-			return (0);
+			return (1);
 		if (!new_token(head_token, line, &idx))
 			return (0);
 		idx++;

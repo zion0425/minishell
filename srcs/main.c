@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 14:15:39 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/02 20:46:26 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/03 04:39:28 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,11 @@ int	main(int argc, char **argv, char **envp)
 		signal_setting();
 		echoctl(0);
 		if (!parse(&cmd_list))
+		{
 			g_var.exit_code = 1;
+			continue ;
+		}
+		ft_execve(&cmd_list);
 		free_cmd_list(&cmd_list);
 	}
 	return (0);

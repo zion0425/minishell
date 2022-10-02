@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/03 03:47:05 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/03 04:24:18 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ void	print_error(char *err_msg);
 void	ft_execve(t_cmd_list *cmds);
 int		openfile(char *filename, char format);
 void	ft_redirect(t_cmd *node);
-void	ft_cmd(char *cmd);
+void	ft_simplecmd(char *cmd);
+void	ft_pipecmd(char *cmd);
+void	ft_redirect(t_cmd *node);
+
 
 struct s_gloval
 {

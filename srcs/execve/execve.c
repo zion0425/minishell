@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:14:23 by siokim            #+#    #+#             */
-/*   Updated: 2022/10/02 17:36:43 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/03 04:21:36 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,35 +59,81 @@ void	ft_cmd(char *cmd)
 	}
 	waitpid(pid, 0, 0);
 }
+// void	recursive_exec(t_cmd **head, int size);
 
-void	ft_pipe(t_cmd *node)
+// void	ft_pipe(t_cmd_list *cmd_list, int size)
+// {
+// 	int	pid;
+// 	int	pipefd[2];
+
+// 	pipe(pipefd);
+// 	pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		close(pipefd[0]);
+// 		dup2(pipefd[1], STDOUT_FILENO);
+// 		if (size > 0)
+// 			ft_pipe(cmd_list, --size);
+// 	}
+// 	else if (pid > 0)
+// 	{
+// 		close(pipefd[1]);
+// 		dup2(pipefd[0], STDIN_FILENO);
+// 		waitpid(pid, 0, 0);
+// 	}
+// 	else
+// 		print_error("fork_error\n");
+// 	recursive_exec(cmd_list->head, size);	
+// }
+
+char	*get_cmds(t_cmd **node)
 {
-	int	pid;
-	int	pipefd[2];
+	char	*tmp_cmd;
 
-	pipe(pipefd);
-	pid = fork();
-	if (pid == 0)
+	tmp_cmd = (*node)->cmd;
+	while ((*node)->next != 0 && (*node)->next->type == WORD)
 	{
-		close(pipefd[0]);
-		dup2(pipefd[1], STDOUT_FILENO);
-
+		tmp_cmd =  ft_strjoin(tmp_cmd, ft_strjoin(" ",(*node)->next->cmd));
+		(*node) = (*node)->next;
 	}
-	else if (pid > 0)
-	{
-		close(pipefd[1]);
-		dup2(pipefd[0], STDIN_FILENO);
-		waitpid(pid, 0, 0);
-
-	}
-	else
-		print_error("fork_error\n");
+	return (tmp_cmd);
 }
 
-void	ft_execve(t_cmd_list *cmds)
+void	recursive_exec(t_cmd **head, int size)
 {
 	t_cmd	*node;
+	char	*tmp_cmd;
+	int		save_stdout;
+	int		save_stdin;
 
+	save_stdout = dup(1);
+	save_stdin = dup(0);
+	size = 0;
+	node = head[size];
+	ft_redirect(node);
+	while (node)
+	{
+		if (node->type == WORD)
+			tmp_cmd = get_cmds(&node);
+		if (node->type >= REDIRIN && node->type <= APPEND)
+			node=node->next;
+		ft_cmd(tmp_cmd);
+		if (node->type == WORD)
+			break;
+		node = node->next;
+	}
+	dup2(save_stdout, 1);
+	dup2(save_stdin, 0);
 
+}
 
+void	ft_execve(t_cmd_list *cmd_list)
+{	
+	int	size;
+	int	i;
+
+	i = -1;
+	size = cmd_list->size;
+
+	recursive_exec(cmd_list->head, size);
 }
