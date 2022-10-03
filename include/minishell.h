@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/03 04:24:18 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/03 08:45:32 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,16 @@ typedef struct s_cmd_list	t_cmd_list;
 typedef struct s_gloval		t_gloval;
 t_gloval					g_var;
 
-void	print_error(char *err_msg);
-void	ft_execve(t_cmd_list *cmds);
+void	ft_pipe();
+int		print_error(char *err_msg);
+void	ft_exec(t_cmd_list *cmds);
 int		openfile(char *filename, char format);
-void	ft_redirect(t_cmd *node);
+int		ft_redirect(t_cmd *node);
 void	ft_simplecmd(char *cmd);
 void	ft_pipecmd(char *cmd);
-void	ft_redirect(t_cmd *node);
-
+void	ft_cmd(char *cmd);
+char	*get_cmds(t_cmd **node);
+void	ft_simplecmd(char *cmd);
 
 struct s_gloval
 {
@@ -80,6 +82,9 @@ struct s_cmd_list
 	int		size;
 };
 
+void	input_token(t_token *new_token, char *line, int *idx);
+void	merge_token(char *line, int *idx, t_token *new_token);
+
 int		parse(t_cmd_list *cmd_list);
 int		is_empty(char *line);
 int		get_token_type(char *line, int idx);
@@ -87,8 +92,6 @@ int		new_token(t_token **head_token, char *line, int *idx);
 int		envp_convert(t_token *head, int cnt);
 char	*dollar_token_handle(char *line, int *idx, t_token *token);
 void	free_token_list(t_token *head_token, char *line);
-void	input_token(t_token *new_token, char *line, int *idx);
-void	merge_token(char *line, int *idx, t_token *new_token);
 
 int		new_cmd_list(t_cmd **head_cmd, t_token *head_token);
 t_token	*search_token(t_token *head, int type);
@@ -101,7 +104,6 @@ void	signal_setting(void);
 void	echoctl(int option);
 
 void	env(void);
-void	echo(t_cmd *head_cmd);
 
 void	show_token_list(t_token *head_token);
 void	show_cmd(t_cmd **head_cmd);

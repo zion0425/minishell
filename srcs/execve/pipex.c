@@ -1,32 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/11 16:37:19 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/03 05:13:34 by siokim           ###   ########.fr       */
+/*   Created: 2022/10/03 07:09:23 by siokim            #+#    #+#             */
+/*   Updated: 2022/10/03 08:48:50 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-static void	signal_handler(int signo)
+void	ft_pipe(char *tmp_cmd)
 {
-	if (signo == SIGINT)
+	int	pid;
+	int	pipefd[2];
+
+	pipe(pipefd);
+	pid = fork();
+	if (pid == 0)
 	{
-		g_var.exit_code = 130;
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		close(pipefd[0]);
+		dup2(pipefd[1], STDOUT_FILENO);
+		ft_simplecmd(tmp_cmd);
 	}
-}
-
-void	signal_setting(void)
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, signal_handler);
+	else if (pid > 0)
+	{
+		close(pipefd[1]);
+		dup2(pipefd[0], STDIN_FILENO);
+		waitpid(pid, 0, 0);
+	}
+	else
+		print_error("fork_error\n");
 }

@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 14:15:39 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/03 04:39:28 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/03 07:02:04 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	main(int argc, char **argv, char **envp)
 			g_var.exit_code = 1;
 			continue ;
 		}
-		ft_execve(&cmd_list);
+		ft_exec(&cmd_list);
 		free_cmd_list(&cmd_list);
 	}
 	return (0);
