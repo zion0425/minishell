@@ -29,6 +29,8 @@ static int	get_argc(t_cmd *cmd)
 
 static void	_cd(t_cmd *cmd)
 {
+	char	*tmp;
+
 	if (cmd->cmd && cmd->cmd[0] != '~')
 	{
 		if (chdir(cmd->cmd) == -1)
@@ -57,8 +59,6 @@ static void	_cd(t_cmd *cmd)
 
 void	cd(t_cmd *cmd, int size)
 {
-	char	*tmp;
-
 	if (size > 1)
 		return ;
 	if (get_argc(cmd) > 2)
