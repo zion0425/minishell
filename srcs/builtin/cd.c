@@ -6,17 +6,29 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 06:31:03 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/03 06:58:26 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/04 10:21:02 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	cd(t_cmd *cmd)
+static int	get_argc(t_cmd *cmd)
 {
-	char	*tmp;
+	int		ret;
+	t_cmd	*cur;
 
-	cmd = cmd->next;
+	cur = cmd;
+	ret = 0;
+	while (cur)
+	{
+		ret++;
+		cur = cur->next;
+	}
+	return (ret);
+}
+
+static void	_cd(t_cmd *cmd)
+{
 	if (cmd->cmd && cmd->cmd[0] != '~')
 	{
 		if (chdir(cmd->cmd) == -1)
@@ -41,4 +53,19 @@ void	cd(t_cmd *cmd)
 			free(tmp);
 		}
 	}
+}
+
+void	cd(t_cmd *cmd, int size)
+{
+	char	*tmp;
+
+	if (size > 1)
+		return ;
+	if (get_argc(cmd) > 2)
+	{
+		printf("minishell: cd: too many arguments\n");
+		g_var.exit_code = 1;
+		return ;
+	}
+	_cd(cmd->next);
 }
