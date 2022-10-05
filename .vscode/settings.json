@@ -12,6 +12,7 @@
 		"string.h": "c",
 		"history.h": "c",
 		"readline.h": "c",
-		"__node_handle": "c"
+		"__node_handle": "c",
+		"libft.h": "c"
 	}
 }

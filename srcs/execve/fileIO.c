@@ -6,16 +6,16 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 11:22:51 by siokim            #+#    #+#             */
-/*   Updated: 2022/10/03 03:56:42 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/05 17:03:46 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	print_error(char *err_msg)
+int	print_error(char *err_msg)
 {
 	printf("%s : %s\n", err_msg, strerror(errno));
-	exit(1);
+	return (-1);
 }
 
 int	openfile(char *filename, char format)
@@ -27,10 +27,10 @@ int	openfile(char *filename, char format)
 	if (format == INFILE)
 	{
 		if (stat(filename, &buf) == -1)
-			print_error(filename);
+			return (print_error(filename));
 		fdin = open(filename, O_RDONLY);
 		if (fdin == -1)
-			print_error(filename);
+			return (print_error(filename));
 		return (fdin);
 	}
 	else
@@ -40,7 +40,7 @@ int	openfile(char *filename, char format)
 		else
 			fdout = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0755);
 		if (fdout == -1)
-			print_error(filename);
+			return (print_error(filename));
 		return (fdout);
 	}
 }	

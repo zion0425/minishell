@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/03 06:50:12 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/05 19:43:22 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,17 @@ typedef struct s_cmd_list	t_cmd_list;
 typedef struct s_gloval		t_gloval;
 t_gloval					g_var;
 
-void	print_error(char *err_msg);
-void	ft_execve(t_cmd_list *cmds);
+void	ft_pipe(t_cmd **head, int start, int size);
+int		print_error(char *err_msg);
+void	ft_exec(t_cmd_list *cmds);
 int		openfile(char *filename, char format);
-void	ft_redirect(t_cmd *node);
-void	ft_simplecmd(char *cmd);
+int		ft_redirect(t_cmd *node);
 void	ft_pipecmd(char *cmd);
-void	ft_redirect(t_cmd *node);
-
+void	ft_cmd(char *cmd);
+char	*get_cmds(t_cmd **node);
+void	recursive_exec(t_cmd **head, int size);
+void	set_stdfd(int *save_stdout, int *save_stdin, char isset);
+void	ft_simplecmd(char *cmd);
 
 struct s_gloval
 {
@@ -79,6 +82,9 @@ struct s_cmd_list
 	t_cmd	**head;
 	int		size;
 };
+
+void	input_token(t_token *new_token, char *line, int *idx);
+void	merge_token(char *line, int *idx, t_token *new_token);
 
 int		parse(t_cmd_list *cmd_list);
 int		is_empty(char *line);

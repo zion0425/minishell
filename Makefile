@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/10 14:08:26 by yjoo              #+#    #+#              #
-#    Updated: 2022/10/03 06:28:12 by yjoo             ###   ########.fr        #
+#    Updated: 2022/10/05 19:43:35 by siokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRCS_DIR = ./srcs
 SRCS_FILES = main.c signal.c utils.c
 PARSE_DIR = ./srcs/parse
 PARSE_FILES = parse.c parse_utils.c token.c token2.c cmd.c
-EXECVE_FILES = execve.c redirect.c fileIO.c
+EXECVE_FILES = exec.c redirect.c fileIO.c execute_cmd.c pipex.c
 EXECVE_DIR = ./srcs/execve
 BUILTIN_DIR = ./srcs/builtin
 BUILTIN_FILES = env.c echo.c exit.c pwd.c

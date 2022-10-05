@@ -6,46 +6,49 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 13:44:11 by siokim            #+#    #+#             */
-/*   Updated: 2022/10/03 03:56:53 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/05 17:54:42 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	redirin(t_cmd *node)
+int	redirin(t_cmd *node)
 {
-	int fdin;
-	
+	int	fdin;
+
 	while (node != 0)
 	{
 		if (node->type == REDIRIN)
 		{
 			fdin = openfile(node->next->cmd, INFILE);
+			if (fdin == -1)
+				return (-1);
 			dup2(fdin, STDIN_FILENO);
 		}
 		node = node->next;
 	}
+	return (0);
 }
 
-
-void	redirout(t_cmd *node)
+int	redirout(t_cmd *node)
 {
 	int	fdout;
-	
+
 	while (node != 0)
 	{
 		if (node->type == REDIROUT)
 		{
 			fdout = openfile(node->next->cmd, OUTFILE);
+			if (fdout == -1)
+				return (-1);
 			dup2(fdout, STDOUT_FILENO);
-			close(fdout);
 		}
 		node = node->next;
 	}
+	return (0);
 }
 
-
-void	append(t_cmd *node)
+int	append(t_cmd *node)
 {
 	int	fdout;
 
@@ -54,17 +57,26 @@ void	append(t_cmd *node)
 		if (node->type == REDIROUT)
 		{
 			fdout = openfile(node->next->cmd, APPEND);
+			if (fdout == -1)
+				return (-1);
 			dup2(fdout, STDOUT_FILENO);
 		}
 		node = node->next;
 	}
+	return (0);
 }
 
-void	ft_redirect(t_cmd *node)
+int	ft_redirect(t_cmd *node)
 {
-	redirin(node);
-	redirout(node);
-	append(node);
+	int	iserr;
+
+	iserr = 0;
+	iserr += redirin(node);
+	iserr += redirout(node);
+	iserr += append(node);
+	if (iserr > 0)
+		iserr = -1;
+	return (iserr);
 }
 
 // void	heredoc(t_cmd *node)
@@ -76,7 +88,5 @@ void	ft_redirect(t_cmd *node)
 // 		if (!ft_strncmp(str, end_str))
 // 		{
 // 			ft_cmd(envp, str);
-
 // 		}
 // 	}
-//
