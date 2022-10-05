@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 21:42:02 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/05 19:58:14 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/05 22:35:53 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,20 @@ static int	check_option(t_cmd *cur)
 	return (0);
 }
 
-void	echo(t_cmd *head_cmd)
+void	echo(t_cmd **cur)
 {
 	int		flag;
-	t_cmd	*cur;
 
-	cur = head_cmd->next;
-	flag = check_option(cur);
+	(*cur) = (*cur)->next;
+	flag = check_option((*cur));
 	if (flag)
-		cur = cur->next;
-	while (cur)
+		(*cur) = (*cur)->next;
+	while ((*cur))
 	{
-		ft_putstr_fd(cur->cmd, 1);
-		if (cur->next)
+		ft_putstr_fd((*cur)->cmd, 1);
+		if ((*cur)->next)
 			ft_putchar_fd(' ', 1);
-		cur = cur->next;
+		(*cur) = (*cur)->next;
 	}
 	if (!flag)
 		ft_putchar_fd('\n', 1);

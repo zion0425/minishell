@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:14:23 by siokim            #+#    #+#             */
-/*   Updated: 2022/10/05 22:06:19 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/06 03:48:37 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	file_error(int *stdout, int *stdin, char *msg)
 	printf("%s : No such file or directory\n", msg);
 }
 
-void	recursive_exec(t_cmd **head, int size)
+void	recursive_exec(t_cmd **head, int size, int max)
 {
 	t_cmd	*node;
 	char	*tmp_cmd;
@@ -46,6 +46,11 @@ void	recursive_exec(t_cmd **head, int size)
 	while (node)
 	{
 		tmp_cmd = 0;
+		if (node->type == BUILTIN)
+		{
+			ft_bulitin(&node, max);
+			continue ;
+		}
 		if (node->type == WORD)
 			tmp_cmd = get_cmds(&node);
 		if (node->type >= REDIRIN && node->type <= APPEND)
@@ -67,7 +72,12 @@ void	ft_exec(t_cmd_list *cmd_list)
 
 	size = cmd_list->size;
 	if (size == 1)
-		recursive_exec(cmd_list->head, --size);
+	{
+		if (!ft_strncmp(cmd_list->head[0]->cmd, "", 1))
+			return ;
+		--size;
+		recursive_exec(cmd_list->head, size, size);
+	}
 	else if (size > 1)
 		ft_pipe(cmd_list->head, 0, --size);
 }

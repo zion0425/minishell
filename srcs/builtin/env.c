@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 21:31:36 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/01 21:54:34 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/06 03:28:51 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ void	env(void)
 {
 	int	idx;
 
-	idx = 0;
-	while (g_var.envp[idx])
-		printf("%s\n", g_var.envp[idx++]);
+	idx = -1;
+	while (g_var.envp[++idx])
+		if (ft_strncmp(g_var.envp[idx], "", 1))
+			printf("%s\n", g_var.envp[idx]);
 	g_var.exit_code = 0;
 }

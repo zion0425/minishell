@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 13:41:15 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/05 19:47:32 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/05 22:19:55 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static int	create_cmd_list(t_cmd_list *cmd_list, t_token *head_token)
 		if (!new_cmd_list(&cmd_list->head[idx], cur_token))
 			return (0);
 		cur_token = search_token(cur_token, PIPE)->next;
-		// show_cmd(&cmd_list->head[idx]);
 		idx++;
 	}
 	return (1);

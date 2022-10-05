@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/05 22:11:27 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/06 04:09:47 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@ int		ft_redirect(t_cmd *node);
 void	ft_pipecmd(char *cmd);
 void	ft_cmd(char *cmd);
 char	*get_cmds(t_cmd **node);
-void	recursive_exec(t_cmd **head, int size);
+void	recursive_exec(t_cmd **head, int size, int max);
 void	set_stdfd(int *save_stdout, int *save_stdin, char isset);
 void	ft_simplecmd(char *cmd);
+void	ft_bulitin(t_cmd **node, int size);
 
 struct s_gloval
 {
@@ -109,10 +110,12 @@ void	signal_setting(int option);
 void	echoctl(int option);
 
 void	env(void);
-void	echo(t_cmd *head_cmd);
-void	ft_exit(t_cmd *cmd, int size);
+void	echo(t_cmd **cur);
 void	pwd(void);
 void	cd(t_cmd *cmd, int size);
+void	unset(t_cmd *cmd);
+void	ft_exit(t_cmd **node, int size);
+void	export(t_cmd **node);
 
 void	show_token_list(t_token *head_token);
 void	show_cmd(t_cmd **head_cmd);

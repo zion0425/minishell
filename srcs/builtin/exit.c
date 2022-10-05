@@ -3,21 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 04:49:31 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/03 06:13:49 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/06 03:35:10 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	exit_msg(char *str, int code)
+void	exit_msg(char *str, int code, int isexit)
 {
-	ft_putstr_fd("exit\n", 1);
-	ft_putstr_fd(str, 1);
 	g_var.exit_code = code;
-	exit(g_var.exit_code);
+	if (isexit == 1)
+	{
+		ft_putstr_fd("exit\n", 1);
+		ft_putstr_fd(str, 1);
+		exit(g_var.exit_code);
+	}
+	ft_putstr_fd(str, 1);
+	return ;
 }
 
 static int	get_argc(t_cmd *cmd)
@@ -35,28 +40,48 @@ static int	get_argc(t_cmd *cmd)
 	return (ret);
 }
 
-void	ft_exit(t_cmd *cmd, int size)
+static int	ft_isdigits(char *str)
+{
+	size_t	size;
+
+	size = ft_strlen(str);
+	while (size--)
+		if (!ft_isdigit(str[size]))
+			return (1);
+	return (0);
+}
+
+void	none_pipe(t_cmd **node, int argc)
+{
+	if (argc == 1)
+		exit_msg("", g_var.exit_code, 1);
+	else if (argc == 2 && !ft_isdigits((*node)->cmd))
+		exit_msg("", g_var.exit_code, 1);
+	else if (argc >= 2 && ft_isdigits((*node)->cmd))
+		exit_msg("minishell: exit: numeric argument required\n", 1, 1);
+	else if (argc >= 3)
+		exit_msg("minishell: exit: too many arguments\n", 255, 0);
+}
+
+void	ft_exit(t_cmd **node, int size)
 {
 	int		argc;
-	int		idx;
-	t_cmd	*cur;
 
-	argc = get_argc(cmd);
-	if (size > 1)
-		return ;
-	if (argc == 1)
-		exit_msg("", g_var.exit_code);
-	else if (argc >= 2)
+	argc = get_argc(*node);
+	(*node) = (*node)->next;
+	if (size == 0)
+		none_pipe(node, argc);
+	else if (size >= 1)
 	{
-		cur = cmd->next;
-		idx = 0;
-		while (ft_isdigit(cmd->cmd[idx]))
-			idx++;
-		if (cur->cmd[idx] == '\0' && argc == 2)
-			exit_msg("", ft_atoi(cur->cmd));
-		else if (cur->cmd[idx] != '\0' && argc >= 2)
-			exit_msg("minishell: exit: numeric argument required\n", 1);
-		else if (cur->cmd[idx] == '\0' && argc > 2)
-			exit_msg("minishell: exit: too many arguments\n", 255);
+		if (argc == 1)
+			exit_msg("", g_var.exit_code, 0);
+		else if (argc == 2 && !ft_isdigits((*node)->cmd))
+			exit_msg("", g_var.exit_code, 0);
+		else if (argc >= 2 && ft_isdigits((*node)->cmd))
+			exit_msg("minishell: exit: numeric argument required\n", 1, 0);
+		else if (argc >= 3)
+			exit_msg("minishell: exit: too many arguments\n", 255, 0);
 	}
+	while (--argc > 0)
+		(*node) = (*node)->next;
 }

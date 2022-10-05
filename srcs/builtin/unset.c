@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 21:47:55 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/02 16:58:21 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/05 22:56:18 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,11 @@
 
 void	unset(t_cmd *cmd)
 {
-	
+	int	idx;
+
+	idx = -1;
+	while (g_var.envp[++idx])
+		if (!ft_strncmp(g_var.envp[idx], cmd->next->cmd, ft_strlen(cmd->next->cmd)))
+			g_var.envp[idx] = "";
+	g_var.exit_code = 0;
 }
