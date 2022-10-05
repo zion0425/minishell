@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 14:15:39 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/05 20:21:11 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/05 21:17:39 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(int argc, char **argv, char **envp)
 	g_var.envp = get_envp(envp);
 	while (1)
 	{
-		signal_setting();
+		signal_setting(0);
 		echoctl(0);
 		if (!parse(&cmd_list))
 		{

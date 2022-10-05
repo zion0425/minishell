@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/05 20:15:20 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/05 21:18:26 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <string.h>
 # include <signal.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 # include <errno.h>
 # include <fcntl.h>
 
@@ -104,7 +105,7 @@ void	free_split(char **split);
 
 char	**get_envp(char **envp);
 int		is_whitespace(char c);
-void	signal_setting(void);
+void	signal_setting(int option);
 void	echoctl(int option);
 
 void	env(void);

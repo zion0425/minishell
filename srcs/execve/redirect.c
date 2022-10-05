@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 13:44:11 by siokim            #+#    #+#             */
-/*   Updated: 2022/10/05 20:48:31 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/05 21:25:20 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,15 @@ int	heredoc(t_cmd *node)
 	{
 		if (node->type == HEREDOC)
 		{
+			signal_setting(1);
 			while (1)
 			{
 				str = readline("> ");
-				if (!ft_strncmp(str, node->next->cmd, ft_strlen(str)) || str == NULL)
+				if (str == NULL || !ft_strncmp(str, node->next->cmd, ft_strlen(str)))
+				{
+					ft_putendl_fd("", 1);
 					return (1);
+				}
 			}
 		}
 		node = node->next;
