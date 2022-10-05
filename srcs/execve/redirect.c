@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 13:44:11 by siokim            #+#    #+#             */
-/*   Updated: 2022/10/03 06:44:58 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/05 17:54:42 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,5 @@ int	ft_redirect(t_cmd *node)
 // 		if (!ft_strncmp(str, end_str))
 // 		{
 // 			ft_cmd(envp, str);
-
 // 		}
 // 	}
-//

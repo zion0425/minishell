@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 06:46:33 by siokim            #+#    #+#             */
-/*   Updated: 2022/10/03 08:45:27 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/05 18:02:25 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ char	*getpath(char *cmd)
 	struct stat	buf;
 
 	i = -1;
-	while (g_var.envp[++i] != NULL)
+	while (g_var.envp[++i] != 0)
 		if (!ft_strncmp(g_var.envp[i], "PATH=", 5))
 			break ;
-	if (ft_strchr(cmd, '/') || g_var.envp[i] == NULL)
+	if (ft_strchr(cmd, '/') || g_var.envp[i] == 0)
 		return (cmd);
 	path = &g_var.envp[i][5];
 	paths = ft_split(path, ':');
