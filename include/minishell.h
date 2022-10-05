@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/05 20:15:20 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/05 20:54:54 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	env(void);
 void	echo(t_cmd *head_cmd);
 void	ft_exit(t_cmd *cmd, int size);
 void	pwd(void);
-void	cd(t_cmd *cmd);
+void	cd(t_cmd *cmd, int size);
 
 void	show_token_list(t_token *head_token);
 void	show_cmd(t_cmd **head_cmd);
