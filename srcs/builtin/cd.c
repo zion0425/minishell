@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 06:31:03 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/06 03:17:19 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/06 06:10:18 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,31 +35,28 @@ static void	_cd(t_cmd *cmd)
 	{
 		if (chdir(cmd->cmd) == -1)
 		{
-			printf("minishell: cd: %s: %s\n", path, strerror(errno));
+			printf("minishell: cd: %s: %s\n", "??path??", strerror(errno));
 			g_var.exit_code = 1;
 		}
 	}
 	else if (ft_strcmp(cmd->cmd, "") == 0 || cmd->cmd[0] == '~')
 	{
 		if (cmd->cmd[1])
-		{
 			printf("minishell: cd: %s: No such file or directory\n", cmd->cmd);
-			g_var.exit_code = 1;
-		}
 		else
 		{
 			tmp = find_value(ft_strdup("HOME"), NULL, -1, 0);
 			if (chdir(tmp) == -1)
 				printf("minishell: cd: Unable to find home\n");
-			g_var.exit_code = 1;
 			free(tmp);
 		}
+		g_var.exit_code = 1;
 	}
 }
 
 void	cd(t_cmd *cmd, int size)
 {
-	if (size > 1)
+	if (size > 0)
 		return ;
 	if (get_argc(cmd) > 2)
 	{

@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 13:44:11 by siokim            #+#    #+#             */
-/*   Updated: 2022/10/05 22:18:48 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/06 07:34:25 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ int	heredoc(t_cmd *node)
 			while (1)
 			{
 				str = readline("> ");
-				if (str == NULL || !ft_strncmp(str, node->next->cmd, ft_strlen(str)))
+				if (str == NULL || \
+				!ft_strncmp(str, node->next->cmd, ft_strlen(str)))
 				{
 					ft_putendl_fd("", 1);
 					return (0);

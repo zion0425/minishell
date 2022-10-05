@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 16:37:19 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/05 22:21:15 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/06 07:55:19 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,9 @@ void	signal_setting(int option)
 	{
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, ft_heredoc_signal);
+	}
+	if (option == 2)
+	{
+		signal(SIGQUIT, SIG_IGN);
 	}
 }

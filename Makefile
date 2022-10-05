@@ -6,7 +6,7 @@
 #    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/10 14:08:26 by yjoo              #+#    #+#              #
-#    Updated: 2022/10/06 03:25:50 by siokim           ###   ########.fr        #
+#    Updated: 2022/10/06 06:21:30 by siokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ PARSE_FILES = parse.c parse_utils.c token.c token2.c cmd.c
 EXECVE_FILES = exec.c redirect.c fileIO.c execute_cmd.c pipex.c execute_bulitin.c
 EXECVE_DIR = ./srcs/execve
 BUILTIN_DIR = ./srcs/builtin
-BUILTIN_FILES = env.c echo.c exit.c pwd.c unset.c export.c
+BUILTIN_FILES = env.c echo.c exit.c pwd.c unset.c export.c cd.c
 
 
 SRCS = $(addprefix $(addsuffix /, $(SRCS_DIR)), $(SRCS_FILES))\

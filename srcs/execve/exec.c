@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:14:23 by siokim            #+#    #+#             */
-/*   Updated: 2022/10/06 03:48:37 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/06 08:13:45 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,38 +32,34 @@ void	file_error(int *stdout, int *stdin, char *msg)
 	printf("%s : No such file or directory\n", msg);
 }
 
-void	recursive_exec(t_cmd **head, int size, int max)
+void	recursive_exec(t_cmd **h, int s, int max)
 {
-	t_cmd	*node;
 	char	*tmp_cmd;
-	int		s_stdout;
-	int		s_stdin;
+	int		s_io[2];
 
-	node = head[size];
-	set_stdfd(&s_stdout, &s_stdin, '0');
-	if (ft_redirect(node) == -1)
-		return (set_stdfd(&s_stdout, &s_stdin, '1'));
-	while (node)
+	set_stdfd(&s_io[0], &s_io[1], '0');
+	if (ft_redirect(h[s]) == -1)
+		return (set_stdfd(&s_io[0], &s_io[1], '1'));
+	while (h[s])
 	{
 		tmp_cmd = 0;
-		if (node->type == BUILTIN)
+		if (h[s]->type == BUILTIN)
 		{
-			ft_bulitin(&node, max);
+			ft_bulitin(&h[s], max);
 			continue ;
 		}
-		if (node->type == WORD)
-			tmp_cmd = get_cmds(&node);
-		if (node->type >= REDIRIN && node->type <= APPEND)
-		{
-			node = node->next;
-			if (tmp_cmd != 0 && node->next->type == WORD)
-				return (file_error(&s_stdout, &s_stdin, node->next->cmd));
-		}
+		if (h[s]->type == WORD)
+			tmp_cmd = get_cmds(&h[s]);
+		if (h[s]->type >= REDIRIN && h[s]->type <= APPEND)
+			h[s] = h[s]->next;
+		if (h[s]->type >= REDIRIN && h[s]->type <= APPEND)
+			if (tmp_cmd != 0 && h[s]->next->type == WORD)
+				return (file_error(&s_io[0], &s_io[1], h[s]->next->cmd));
 		if (tmp_cmd != 0)
 			ft_cmd(tmp_cmd);
-		node = node->next;
+		h[s] = h[s]->next;
 	}
-	set_stdfd(&s_stdout, &s_stdin, '1');
+	set_stdfd(&s_io[0], &s_io[1], '1');
 }
 
 void	ft_exec(t_cmd_list *cmd_list)
@@ -78,6 +74,6 @@ void	ft_exec(t_cmd_list *cmd_list)
 		--size;
 		recursive_exec(cmd_list->head, size, size);
 	}
-	else if (size > 1)
-		ft_pipe(cmd_list->head, 0, --size);
+	else if (--size >= 1)
+			ft_pipe(cmd_list->head, 0, size);
 }
