@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/05 21:18:26 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/05 22:11:27 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	env(void);
 void	echo(t_cmd *head_cmd);
 void	ft_exit(t_cmd *cmd, int size);
 void	pwd(void);
-void	cd(t_cmd *cmd);
+void	cd(t_cmd *cmd, int size);
 
 void	show_token_list(t_token *head_token);
 void	show_cmd(t_cmd **head_cmd);

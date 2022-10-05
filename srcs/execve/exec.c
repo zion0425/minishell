@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:14:23 by siokim            #+#    #+#             */
-/*   Updated: 2022/10/05 20:40:22 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/05 22:06:19 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,24 @@ void	set_stdfd(int *save_stdout, int *save_stdin, char isset)
 		dup2(*save_stdout, 0);
 	}
 }
+
 void	file_error(int *stdout, int *stdin, char *msg)
 {
-	printf("%s : No such file or directory\n", msg);
 	set_stdfd(stdout, stdin, '1');
+	printf("%s : No such file or directory\n", msg);
 }
 
 void	recursive_exec(t_cmd **head, int size)
 {
 	t_cmd	*node;
 	char	*tmp_cmd;
-	int		save_stdout;
-	int		save_stdin;
+	int		s_stdout;
+	int		s_stdin;
 
 	node = head[size];
-	set_stdfd(&save_stdout, &save_stdin, '0');
+	set_stdfd(&s_stdout, &s_stdin, '0');
 	if (ft_redirect(node) == -1)
-		return (set_stdfd(&save_stdout, &save_stdin, '1'));
+		return (set_stdfd(&s_stdout, &s_stdin, '1'));
 	while (node)
 	{
 		tmp_cmd = 0;
@@ -50,14 +51,14 @@ void	recursive_exec(t_cmd **head, int size)
 		if (node->type >= REDIRIN && node->type <= APPEND)
 		{
 			node = node->next;
-			if (node->type == WORD)
-				return (file_error(&save_stdout, &save_stdin, node->cmd));
+			if (tmp_cmd != 0 && node->next->type == WORD)
+				return (file_error(&s_stdout, &s_stdin, node->next->cmd));
 		}
 		if (tmp_cmd != 0)
 			ft_cmd(tmp_cmd);
 		node = node->next;
 	}
-	set_stdfd(&save_stdout, &save_stdin, '1');
+	set_stdfd(&s_stdout, &s_stdin, '1');
 }
 
 void	ft_exec(t_cmd_list *cmd_list)

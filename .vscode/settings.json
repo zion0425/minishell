@@ -13,6 +13,7 @@
 		"history.h": "c",
 		"readline.h": "c",
 		"__node_handle": "c",
-		"libft.h": "c"
+		"libft.h": "c",
+		"errno.h": "c"
 	}
 }

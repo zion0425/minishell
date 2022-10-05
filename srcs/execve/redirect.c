@@ -6,7 +6,7 @@
 /*   By: yjoo <yjoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 13:44:11 by siokim            #+#    #+#             */
-/*   Updated: 2022/10/05 21:25:20 by yjoo             ###   ########.fr       */
+/*   Updated: 2022/10/05 22:11:09 by yjoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,10 @@ int	append(t_cmd *node)
 	return (0);
 }
 
-
 int	heredoc(t_cmd *node)
 {
 	char	*str;
-	
+
 	while (node != 0)
 	{
 		if (node->type == HEREDOC)
@@ -82,7 +81,7 @@ int	heredoc(t_cmd *node)
 				if (str == NULL || !ft_strncmp(str, node->next->cmd, ft_strlen(str)))
 				{
 					ft_putendl_fd("", 1);
-					return (1);
+					return (0);
 				}
 			}
 		}
