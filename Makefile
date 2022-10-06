@@ -6,7 +6,7 @@
 #    By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/10 14:08:26 by yjoo              #+#    #+#              #
-#    Updated: 2022/10/06 06:21:30 by siokim           ###   ########.fr        #
+#    Updated: 2022/10/06 10:26:48 by siokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRCS_DIR = ./srcs
 SRCS_FILES = main.c signal.c utils.c
 PARSE_DIR = ./srcs/parse
 PARSE_FILES = parse.c parse_utils.c token.c token2.c cmd.c
-EXECVE_FILES = exec.c redirect.c fileIO.c execute_cmd.c pipex.c execute_bulitin.c
+EXECVE_FILES = exec.c redirect.c fileIO.c execute_cmd.c pipex.c execute_bulitin.c heredoc.c
 EXECVE_DIR = ./srcs/execve
 BUILTIN_DIR = ./srcs/builtin
 BUILTIN_FILES = env.c echo.c exit.c pwd.c unset.c export.c cd.c

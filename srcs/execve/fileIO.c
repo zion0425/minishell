@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 11:22:51 by siokim            #+#    #+#             */
-/*   Updated: 2022/10/05 17:03:46 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/06 10:49:57 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	openfile(char *filename, char format)
 	{
 		if (stat(filename, &buf) == -1)
 			return (print_error(filename));
-		fdin = open(filename, O_RDONLY);
+		fdin = open(filename, O_RDWR);
 		if (fdin == -1)
 			return (print_error(filename));
 		return (fdin);

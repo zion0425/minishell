@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/06 09:40:07 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/06 10:39:06 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,6 @@ void	show_token_list(t_token *head_token);
 void	show_cmd(t_cmd **head_cmd);
 char	**new_envp(char *str, int size);
 char	*get_pwd(void);
+int		heredoc(t_cmd *node);
 
 #endif
