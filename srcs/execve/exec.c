@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:14:23 by siokim            #+#    #+#             */
-/*   Updated: 2022/10/06 08:13:45 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/06 09:46:38 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ void	file_error(int *stdout, int *stdin, char *msg)
 	printf("%s : No such file or directory\n", msg);
 }
 
+void	execmd(char *tmp_cmd)
+{
+	if (tmp_cmd != 0)
+		ft_cmd(tmp_cmd);
+}
+
 void	recursive_exec(t_cmd **h, int s, int max)
 {
 	char	*tmp_cmd;
@@ -55,8 +61,7 @@ void	recursive_exec(t_cmd **h, int s, int max)
 		if (h[s]->type >= REDIRIN && h[s]->type <= APPEND)
 			if (tmp_cmd != 0 && h[s]->next->type == WORD)
 				return (file_error(&s_io[0], &s_io[1], h[s]->next->cmd));
-		if (tmp_cmd != 0)
-			ft_cmd(tmp_cmd);
+		execmd(tmp_cmd);
 		h[s] = h[s]->next;
 	}
 	set_stdfd(&s_io[0], &s_io[1], '1');
@@ -75,5 +80,5 @@ void	ft_exec(t_cmd_list *cmd_list)
 		recursive_exec(cmd_list->head, size, size);
 	}
 	else if (--size >= 1)
-			ft_pipe(cmd_list->head, 0, size);
+		ft_pipe(cmd_list->head, 0, size);
 }

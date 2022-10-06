@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 07:09:23 by siokim            #+#    #+#             */
-/*   Updated: 2022/10/06 08:13:37 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/06 09:12:46 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,11 @@ void	ft_pipe(t_cmd **head, int start, int size)
 		dup2(pipefd[0], STDIN_FILENO);
 		if (++start == size)
 		{
+			wait(0);
 			recursive_exec(head, start, size);
 			return ;
 		}
 		ft_pipe(head, start, size);
+		wait(0);
 	}
 }

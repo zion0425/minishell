@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 21:47:55 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/06 05:49:41 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/06 09:10:57 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	tmp_unset(char *str)
 
 	idx = 0;
 	tmp_str = 0;
-	while (ft_strncmp(&str[idx], "=", 1))
+	while (str[idx] && ft_strncmp(&str[idx], "=", 1))
 		idx++;
 	tmp_str = malloc(sizeof(char *) * (idx + 1));
 	tmp_str[idx] = 0;

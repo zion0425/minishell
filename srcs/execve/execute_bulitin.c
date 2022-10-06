@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 22:22:44 by siokim            #+#    #+#             */
-/*   Updated: 2022/10/06 06:12:25 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/06 09:44:47 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	ft_bulitin(t_cmd **node, int size)
 {
 	if (!ft_strncmp((*node)->cmd, "cd", 2))
 	{
-		cd(*node, size);
+		cd(node, size);
+		(*node) = (*node)->next;
 	}
 	else if (!ft_strncmp((*node)->cmd, "echo", 4))
 	{

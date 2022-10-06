@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/06 06:44:12 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/06 09:40:07 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,6 @@ typedef struct s_cmd_list	t_cmd_list;
 typedef struct s_gloval		t_gloval;
 t_gloval					g_var;
 
-void	ft_pipe(t_cmd **head, int start, int size);
-int		print_error(char *err_msg);
-void	ft_exec(t_cmd_list *cmds);
-int		openfile(char *filename, char format);
-int		ft_redirect(t_cmd *node);
-void	ft_pipecmd(char *cmd);
-void	ft_cmd(char *cmd);
-char	*get_cmds(t_cmd **node);
-void	recursive_exec(t_cmd **h, int s, int max);
-void	set_stdfd(int *save_stdout, int *save_stdin, char isset);
-void	ft_simplecmd(char *cmd);
-void	ft_bulitin(t_cmd **node, int size);
-
 struct s_gloval
 {
 	char	**envp;
@@ -84,10 +71,18 @@ struct s_cmd_list
 	t_cmd	**head;
 	int		size;
 };
-
-void	input_token(t_token *new_token, char *line, int *idx);
-void	merge_token(char *line, int *idx, t_token *new_token);
-
+void	ft_pipe(t_cmd **head, int start, int size);
+int		print_error(char *err_msg);
+void	ft_exec(t_cmd_list *cmds);
+int		openfile(char *filename, char format);
+int		ft_redirect(t_cmd *node);
+void	ft_pipecmd(char *cmd);
+void	ft_cmd(char *cmd);
+char	*get_cmds(t_cmd **node);
+void	recursive_exec(t_cmd **h, int s, int max);
+void	set_stdfd(int *save_stdout, int *save_stdin, char isset);
+void	ft_simplecmd(char *cmd);
+void	ft_bulitin(t_cmd **node, int size);
 int		parse(t_cmd_list *cmd_list);
 int		is_empty(char *line);
 int		get_token_type(char *line, int idx);
@@ -98,27 +93,24 @@ void	free_token_list(t_token *head_token, char *line);
 void	input_token(t_token *new_token, char *line, int *idx);
 void	merge_token(char *line, int *idx, t_token *new_token);
 char	*find_value(char *key, char *ret, int idx, int jdx);
-
 int		new_cmd_list(t_cmd **head_cmd, t_token *head_token);
 t_token	*search_token(t_token *head, int type);
-
 void	free_split(char **split);
-
 char	**get_envp(char **envp);
 int		is_whitespace(char c);
 void	signal_setting(int option);
 void	echoctl(int option);
-
 void	env(void);
 void	echo(t_cmd **cur);
 void	pwd(void);
-void	cd(t_cmd *cmd, int size);
+void	cd(t_cmd **node, int size);
 void	unset(t_cmd *cmd);
 void	ft_exit(t_cmd **node, int size);
 void	export(t_cmd **node);
 void	tmp_unset(char *str);
-
 void	show_token_list(t_token *head_token);
 void	show_cmd(t_cmd **head_cmd);
+char	**new_envp(char *str, int size);
+char	*get_pwd(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 06:31:03 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/06 06:10:18 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/06 09:34:46 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,17 @@ static int	get_argc(t_cmd *cmd)
 	return (ret);
 }
 
+static void	set_oldpath(char *old_path)
+{
+	int		idx;
+
+	idx = 0;
+	tmp_unset(old_path);
+	while (g_var.envp[idx])
+		idx++;
+	g_var.envp = new_envp(old_path, idx);
+}
+
 static void	_cd(t_cmd *cmd)
 {
 	char	*tmp;
@@ -35,7 +46,7 @@ static void	_cd(t_cmd *cmd)
 	{
 		if (chdir(cmd->cmd) == -1)
 		{
-			printf("minishell: cd: %s: %s\n", "??path??", strerror(errno));
+			printf("minishell: cd: %s: %s\n", cmd->cmd, strerror(errno));
 			g_var.exit_code = 1;
 		}
 	}
@@ -54,15 +65,29 @@ static void	_cd(t_cmd *cmd)
 	}
 }
 
-void	cd(t_cmd *cmd, int size)
+void	cd(t_cmd **node, int size)
 {
+	int		argc;
+	char	*old_path;
+
+	old_path = get_pwd();
+	old_path = ft_strjoin("OLDPWD=", old_path);
+	argc = get_argc(*node);
 	if (size > 0)
 		return ;
-	if (get_argc(cmd) > 2)
+	else if (argc <= 1)
+		return ;
+	else if (argc > 2)
 	{
 		printf("minishell: cd: too many arguments\n");
 		g_var.exit_code = 1;
+		while (--argc > 0)
+			(*node) = (*node)->next;
 		return ;
 	}
-	_cd(cmd->next);
+	_cd((*node)->next);
+	if (g_var.exit_code == 0)
+		set_oldpath(old_path);
+	while (--argc > 0)
+		(*node) = (*node)->next;
 }

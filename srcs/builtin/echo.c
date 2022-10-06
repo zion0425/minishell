@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 21:42:02 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/05 22:35:53 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/06 10:10:59 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	echo(t_cmd **cur)
 	flag = check_option((*cur));
 	if (flag)
 		(*cur) = (*cur)->next;
-	while ((*cur))
+	while ((*cur) && (*cur)->type == WORD)
 	{
 		ft_putstr_fd((*cur)->cmd, 1);
 		if ((*cur)->next)

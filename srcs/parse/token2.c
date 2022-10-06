@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:16:32 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/03 04:30:25 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/06 09:47:12 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,44 +139,4 @@ int	envp_convert(t_token *head, int cnt)
 		cur = cur->next;
 	}
 	return (1);
-}
-
-//삭제예정
-void	show_token_list(t_token *head_token)
-{
-	t_token	*cur_token;
-	int		i;
-
-	cur_token = head_token;
-	i = 1;
-	if (!head_token)
-		return ;
-	while (1)
-	{
-		printf("cur[%d]token : %d, %s\n", i, cur_token->type, cur_token->token);
-		if (!cur_token->next)
-			break ;
-		cur_token = cur_token->next;
-		i++;
-	}
-}
-
-//삭제예정
-void	show_cmd(t_cmd **head_cmd)
-{
-	t_cmd	*cur_cmd;
-	int		i;
-
-	cur_cmd = *head_cmd;
-	i = 1;
-	if (!*head_cmd)
-		return ;
-	while (1)
-	{
-		printf("cur[%d]cmd : %s, type : %d\n", i, cur_cmd->cmd, cur_cmd->type);
-		if (!cur_cmd->next)
-			break ;
-		cur_cmd = cur_cmd->next;
-		i++;
-	}
 }
