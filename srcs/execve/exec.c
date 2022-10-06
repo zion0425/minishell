@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:14:23 by siokim            #+#    #+#             */
-/*   Updated: 2022/10/06 12:06:57 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/06 13:06:38 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	recursive_exec(t_cmd **h, int s, int max)
 	int		s_io[2];
 
 	set_stdfd(&s_io[0], &s_io[1], '0');
-	if (ft_redirect(h[s]) == -1)
+	if (ft_redirect(h[s], max) == -1)
 		return (set_stdfd(&s_io[0], &s_io[1], '1'));
 	while (h[s])
 	{

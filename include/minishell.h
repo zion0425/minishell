@@ -6,7 +6,7 @@
 /*   By: siokim <siokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:37:07 by yjoo              #+#    #+#             */
-/*   Updated: 2022/10/06 10:39:06 by siokim           ###   ########.fr       */
+/*   Updated: 2022/10/06 13:40:44 by siokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	ft_pipe(t_cmd **head, int start, int size);
 int		print_error(char *err_msg);
 void	ft_exec(t_cmd_list *cmds);
 int		openfile(char *filename, char format);
-int		ft_redirect(t_cmd *node);
+int		ft_redirect(t_cmd *node, int size);
 void	ft_pipecmd(char *cmd);
 void	ft_cmd(char *cmd);
 char	*get_cmds(t_cmd **node);
